@@ -8,7 +8,7 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 
 [demo on github page](https://pocketdigi.github.io/kong-admin-ui) `https` protocol,so your kong admin api must `https` too.
 
-[demo on pocketdigi](http://kong-admin.pocketdigi.com) `http` protocol,the server is in China.
+[demo on pocketdigi.com](http://kong-admin.pocketdigi.com) `http` protocol,the server is in China.
 
 ### screenshots
 
