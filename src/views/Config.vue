@@ -22,7 +22,7 @@
         </div>
         <a href="https://github.com/pocketdigi/kong-admin-ui"><img
                 style="position: absolute; top: 0; left: 0; border: 0;"
-                src="http://kong-admin.pocketdigi.com/img/forkme_left_green_007200.png" alt="Fork me on GitHub"></a>
+                src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub"></a>
     </div>
 
 </template>
