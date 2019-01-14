@@ -69,7 +69,6 @@
                         key: 'health',
                         width: 200,
                         render:function (h, params) {
-                            console.log("render");
                             if(params.row.health==='HEALTHY'){
                                 return h('div',[
                                     h('Icon',{

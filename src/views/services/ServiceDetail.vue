@@ -124,9 +124,7 @@
         mounted() {
 
             EventBus.$emit('changePage', {activeName: 'service-list', openNames: ['service']});
-            console.log(this.$route.params.id);
             EventBus.$on('routeChange', ({routeId}) => {
-                console.log("route change:" + routeId);
                 for (let route of this.routes) {
                     if (route.id === routeId) {
                         this.loadRoutes();
@@ -157,20 +155,19 @@
                 this._get('/services/' + this.$route.params.id + '/routes', response => {
                     this.routes = response.data.data
                     this.routes.map(function (route) {
-                        let createDate = moment.unix(route.created_at)
+                        let createDate = moment.unix(route.created_at);
                         route.createAtStr = createDate.format('YYYY-MM-DD HH:mm:ss');
-                        let updatedDate = moment.unix(route.updated_at)
+                        let updatedDate = moment.unix(route.updated_at);
                         route.updatedAtStr = updatedDate.format('YYYY-MM-DD HH:mm:ss');
                     });
                 });
             },
             loadUpstream() {
                 this._get('/upstreams/' + this.service.host, response => {
-                    this.upstream = response.data
-                    console.log(this.upstream)
-                    let createDate = moment.unix(this.upstream.created_at)
+                    this.upstream = response.data;
+                    let createDate = moment.unix(this.upstream.created_at);
                     this.upstream.createAtStr = createDate.format('YYYY-MM-DD HH:mm:ss');
-                    let updatedDate = moment.unix(this.upstream.updated_at)
+                    let updatedDate = moment.unix(this.upstream.updated_at);
                     this.upstream.updatedAtStr = updatedDate.format('YYYY-MM-DD HH:mm:ss');
 
                     this.$nextTick(() => {

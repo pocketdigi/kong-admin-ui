@@ -316,7 +316,6 @@
         },
         mounted() {
             this.upstreamId=this.$route.params.id;
-            console.log("addUpstream:"+ this.upstreamId);
             this.formItem.name=this.$route.params.name;
             this.edit=this.upstreamId!=null;
             if(this.edit) {
@@ -346,14 +345,12 @@
                 }
 
                 if(!this.edit){
-                    this._post('/upstreams/',this.formItem,response=>{
-                        console.log(response.data);
+                    this._post('/upstreams/',this.formItem,()=>{
                         _this.$router.go(-1);
                     });
                 }else{
                     //edit
-                    this._patch('/upstreams/'+this.upstreamId,this.formItem,response => {
-                        console.log(response.data);
+                    this._patch('/upstreams/'+this.upstreamId,this.formItem,() => {
                         _this.$router.go(-1);
                     });
                 }
