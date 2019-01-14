@@ -2,7 +2,7 @@
     <div id="content">
         <Breadcrumb>
             <BreadcrumbItem to="/">Home</BreadcrumbItem>
-            <BreadcrumbItem to="/routes">Routes</BreadcrumbItem>
+            <BreadcrumbItem to="/routes">Route</BreadcrumbItem>
         </Breadcrumb>
         <Row>
             <Col span="12"> <h1>Route List:</h1></Col>
