@@ -37,6 +37,16 @@
                     </router-link>
 
                 </Submenu>
+                <Submenu name="consumer">
+                    <template slot="title">
+                        <Icon type="ios-stats"/>
+                        Consumer
+                    </template>
+                    <router-link to="/consumers">
+                        <MenuItem name="consumer-list">Consumer List</MenuItem>
+                    </router-link>
+
+                </Submenu>
             </Menu>
         </Col>
     </Row>

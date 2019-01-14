@@ -87,7 +87,7 @@ export default {
             }else{
                 console.log('error');
                 _this.$Message.error({content: 'Failed to connect with your kong admin api,please check the address you input,or your computer has no permission to visit the admin api', duration: 10});
-                _this.$router.push('/config');
+                // _this.$router.push('/config');
             }
         }
     }

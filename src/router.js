@@ -12,6 +12,7 @@ import RouteList from './views/routes/RouteList'
 import AddRoute from './views/routes/AddRoute'
 import UpstreamList from './views/upstreams/UpstreamList'
 import AddUpstream from './views/upstreams/AddUpstream'
+import ConsumerList from './views/consumers/ConsumerList'
 
 Vue.use(Router)
 
@@ -84,6 +85,10 @@ export default new Router({
                 {
                     path:'upstreams/add/:name',
                     component:AddUpstream
+                },
+                {
+                    path:'consumers',
+                    component:ConsumerList
                 },
                 {
                     path:'',
