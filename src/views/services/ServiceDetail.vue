@@ -91,6 +91,18 @@
             </Card>
 
         </div>
+        <Divider/>
+        <div id="plugins">
+            <Row>
+                <Col span="12"><h1>Plugins:</h1></Col>
+                <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
+                    <Button type="primary" size="small" @click="addPlugin()">Add plugin</Button>
+                </Col>
+            </Row>
+            <PluginTable v-bind:plugins="plugins"></PluginTable>
+
+        </div>
+
     </div>
 </template>
 
@@ -99,6 +111,7 @@
     import RouteTable from '@/components/services/RouteTable'
     import EventBus from '@/event-bus'
     import TargetTable from '@/components/services/TargetTable'
+    import PluginTable from '@/components/plugins/PluginTable'
     import hljs from 'highlight.js'
     import 'highlight.js/styles/atom-one-dark.css'
 
@@ -118,7 +131,8 @@
                 service: {},
                 routes: [],
                 upstream: {},
-                upstreamExisted:true
+                upstreamExisted:true,
+                plugins:[]
             }
         },
         mounted() {
@@ -138,7 +152,8 @@
         },
         components: {
             RouteTable,
-            TargetTable
+            TargetTable,
+            PluginTable
         },
         methods: {
             loadServiceDetail() {
@@ -150,6 +165,8 @@
                     this.service.updatedAtStr = updatedDate.format('YYYY-MM-DD HH:mm:ss');
                     this.loadRoutes();
                     this.loadUpstream();
+                    this.loadPlugins();
+
                 });
             },
             loadRoutes() {
@@ -167,7 +184,6 @@
             loadUpstream() {
                 this._get('/upstreams/' + this.service.host, response => {
                     this.upstream = response.data
-                    console.log(this.upstream)
                     let createDate = moment.unix(this.upstream.created_at)
                     this.upstream.createAtStr = createDate.format('YYYY-MM-DD HH:mm:ss');
                     let updatedDate = moment.unix(this.upstream.updated_at)
@@ -186,6 +202,21 @@
                 });
 
             },
+            loadPlugins() {
+                this._get('/services/' + this.$route.params.id+'/plugins', response => {
+                    this.plugins = response.data.data;
+
+                    this.plugins.map(function (plugin) {
+                        let createDate = moment.unix(plugin.created_at);
+                        plugin.createAtStr = createDate.format('YYYY-MM-DD HH:mm:ss');
+                    });
+
+                    this.$nextTick(() => {
+                        highlightCode();
+                    })
+                });
+
+            },
             editService() {
                 this.$router.push({path: `/services/edit/${this.service.id}`});
             },
@@ -200,7 +231,11 @@
             },
             editUpstream() {
                 this.$router.push({path: `/upstreams/edit/${this.upstream.id}`});
+            },
+            addPlugin(){
+                this.$router.push({path: `/plugins/add/service/${this.service.id}`});
             }
+
         },
         destroyed() {
             EventBus.$off('routeChange');
