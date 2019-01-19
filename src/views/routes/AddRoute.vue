@@ -65,8 +65,8 @@
             <!--</FormItem>-->
             <FormItem label="strip_path:">
                 <i-switch v-model="formItem.strip_path" size="large">
-                    <span slot="true">true</span>
-                    <span slot="false">false</span>
+                    <span slot="open">true</span>
+                    <span slot="close">false</span>
                 </i-switch>
                 <span class="field_desc">When matching a Route via one of the paths, strip the matching prefix from the upstream request URL.</span>
 
@@ -74,8 +74,8 @@
 
             <FormItem label="preserve_host:">
                 <i-switch v-model="formItem.preserve_host" size="large">
-                    <span slot="true">true</span>
-                    <span slot="false">false</span>
+                    <span slot="open">true</span>
+                    <span slot="close">false</span>
                 </i-switch>
                 <span class="field_desc">When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. If set to false, the upstream Host header will be that of the Service’s host.</span>
             </FormItem>

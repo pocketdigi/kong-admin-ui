@@ -65,8 +65,8 @@
 
             <FormItem label="healthchecks.active.https_verify_certificate:">
                 <i-switch v-model="formItem.healthchecks.active.https_verify_certificate" size="large">
-                    <span slot="true">true</span>
-                    <span slot="false">false</span>
+                    <span slot="open">true</span>
+                    <span slot="close">false</span>
                 </i-switch>
                 <span class="field_desc">Whether to check the validity of the SSL certificate of the remote host when performing active health checks using HTTPS. </span>
             </FormItem>
