@@ -22,37 +22,42 @@
                 <Select v-model="formItem.service_id" filterable class="text_input_multiple">
                     <Option v-for="item in services" :value="item.id" :key="item.id">{{ item.id+' '+item.name}}</Option>
                 </Select>
-                <Button type="primary" @click="formItem.service_id=''">Clear</Button>
-
+                <Button type="primary" @click="formItem.service_id=''" size="small" class="clear_button">Clear
+                </Button>
                 <span class="field_desc">If this plugin no need assign to a service,leave it blank.</span>
             </FormItem>
+
             <FormItem label="route:">
                 <Select v-model="formItem.route_id" filterable class="text_input_multiple">
                     <Option v-for="item in routes" :value="item.id" :key="item.id">{{ item.id }}
                     </Option>
                 </Select>
+                <Button type="primary" @click="formItem.route_id=''" size="small" class="clear_button">Clear
+                </Button>
                 <span class="field_desc">If this plugin no need assign to a route,leave it blank.</span>
             </FormItem>
 
+
             <FormItem label="consumer:">
                 <Select v-model="formItem.consumer_id" filterable class="text_input_multiple">
-                    <Option v-for="item in consumers" :value="item.id" :key="item.id">{{ item.id+' '+item.username
-                        +' '+item.custom_id }}
+                    <Option v-for="item in consumers" :value="item.id" :key="item.id">
+                        {{ item.id+' '+item.username+' '+item.custom_id }}
                     </Option>
                 </Select>
+                <Button type="primary" @click="formItem.consumer_id=''" size="small" class="clear_button">Clear
+                </Button>
                 <span class="field_desc">If this plugin no need assign to a consumer,leave it blank.</span>
             </FormItem>
-
 
 
             <FormItem :label-width="300" v-for="field in flatFields" :label="field.fieldName+':'"
                       :key="field.fieldName">
 
-                <Input v-if="field.fieldType==='string'" :name="field.fieldName" class="text_input"
-                       :value="field.defaultValue"></Input>
-                <Input v-if="field.fieldType==='array'&&field.elementType==='string'" :name="field.fieldName"
+                <Input v-if="field.fieldType==='string'" :name="field.fieldName" class="text_input" @input="valueChange($event,field)"
+                       :value="field.defaultValue" ></Input>
+                <Input v-if="field.fieldType==='array'&&field.elementType==='string'" :name="field.fieldName"  @input="valueChange($event,field)"
                        class="text_input" :value="field.defaultValue"></Input>
-                <Input v-if="field.fieldType==='set'&&field.elementType==='string'" :name="field.fieldName"
+                <Input v-if="field.fieldType==='set'&&field.elementType==='string'" :name="field.fieldName"  @input="valueChange($event,field)"
                        class="text_input" :value="field.defaultValue"></Input>
                 <InputNumber v-if="field.fieldType==='number'" :name="field.fieldName" class="text_input"
                              :value="field.defaultValue"></InputNumber>
@@ -81,6 +86,8 @@
                 pluginId: '',
                 formItem: {
                     service_id: '',
+                    route_id: '',
+                    consumer_id:'',
                     config: {},
                     enabled: false,
                     run_on: ''
@@ -91,7 +98,7 @@
                 flatFields: [],
                 consumers: [],
                 services: [],
-                routes:[]
+                routes: []
             }
         },
         watch: {
@@ -100,7 +107,7 @@
                 this.loadPluginSchema();
             },
             serviceId: function (newVal, oldVal) {
-                this.formItem.route_id='';
+                this.formItem.route_id = '';
                 this.loadRoutes();
             }
         },
@@ -197,7 +204,6 @@
             },
 
             formField(fieldName, fieldType, elementType, defaultValue, mapValueFields) {
-
                 return {
                     fieldName: fieldName,
                     fieldType: fieldType,
@@ -230,6 +236,44 @@
                 });
 
             },
+            valueChange: function (val, field) {
+                console.log(val);
+                console.log(field);
+                let fieldName = field.fieldName;
+                let nameArr = fieldName.split('.');
+                let obj = this.formItem.config;
+                for (let i = 1; i < nameArr.length; i++) {
+                    let name = nameArr[i];
+                    if (i < nameArr.length - 1) {
+                        //not the last one
+                        if (!Reflect.has(obj, name)) {
+                            Reflect.defineProperty(obj, name, {value: {}})
+                        }
+                    } else {
+                        if (!Reflect.has(obj, name)) {
+                            if (field.fieldType === 'string') {
+                                Reflect.defineProperty(obj, name, {value: val})
+                            } else if (field.fieldType === 'number') {
+                                //number
+                                Reflect.defineProperty(obj, name, {value: parseFloat(val)})
+                            } else if (field.fieldType === 'integer') {
+                                Reflect.defineProperty(obj, name, {value: parseInt(val)})
+                            } else if (field.fieldType === 'array' || field.fieldType === 'set') {
+                                let valArray=val.split(',');
+                                if(field.elementType==='string') {
+                                    Reflect.defineProperty(obj, name, {value: valArray})
+                                }else {
+                                    let valArray=val.split(',');
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+
+                alert("change")
+            },
             savePlugin() {
 
             }
@@ -249,6 +293,10 @@
 
     .text_input_multiple {
         max-width: 400px;
+    }
+
+    .clear_button {
+        margin-left: 10px;
     }
 </style>
 
