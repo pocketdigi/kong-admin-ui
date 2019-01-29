@@ -16,6 +16,8 @@
 </template>
 
 <script>
+    import EventBus from '@/event-bus'
+
     export default {
         name: "PluginTable",
         props:['plugins'],
@@ -48,7 +50,6 @@
                     },
                     {
                         title: 'consumer',
-                        width:140,
                         render:function (h, params) {
                             if(params.row.consumer){
                                 return h('router-link',{props: {to:'/consumers/edit/'+params.row.consumer.id}},params.row.consumer.id);
@@ -60,27 +61,19 @@
                     {
                         title: 'created_at',
                         key: 'createAtStr',
-                        width:100
+                        width:150
                     },
                     {
                         title: 'route',
                         key: 'route',
-                        width:80
+                        width:140
                     },
                     {
                         title: 'enabled',
                         key: 'enabled',
-                        width:90
-                    },
-                    {
-                        title: 'config',
-                        key: 'config',
-                        width:500,
+                        width:90,
                         render:function (h, params) {
-                            if(params.row.config){
-                                return h('pre',JSON.stringify(params.row.config,undefined,2));
-                            }
-                            return h();
+                            return h('i-switch',{props:{value:params.row.enabled,disabled:true}})
                         }
                     },
                     {
@@ -96,7 +89,24 @@
         methods:{
             edit(pluginId){
                 this.$router.push({path: `/plugins/edit/${pluginId}`});
-            }
+            },
+            deleteDialog(pluginId) {
+                let _this=this;
+                this.$Modal.confirm({
+                    title: 'Delete Plugin',
+                    content: '<p>Are you sure you would like to delete</p>' + '<p style="font-weight: bold">' + pluginId + '</p>',
+                    onOk: () => {
+                        _this._delete('/plugins/' + pluginId,()=> {
+                            _this.$Message.info('Plugin deleted!');
+                            EventBus.$emit('pluginChange', {pluginId: pluginId});
+                        });
+                    },
+                    onCancel: () => {
+
+
+                    }
+                });
+            },
         }
     }
 </script>

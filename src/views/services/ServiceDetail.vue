@@ -148,6 +148,16 @@
                     }
                 }
             });
+            EventBus.$on('pluginChange',({pluginId}) => {
+                console.log("plugin change:"+pluginId);
+                for(let plugin of this.plugins) {
+                    if(plugin.id===pluginId) {
+                        this.loadPlugins();
+                        break;
+                    }
+                }
+            });
+
             this.loadServiceDetail();
         },
         components: {
@@ -239,6 +249,7 @@
         },
         destroyed() {
             EventBus.$off('routeChange');
+            EventBus.$off('pluginChange');
         }
 
 
