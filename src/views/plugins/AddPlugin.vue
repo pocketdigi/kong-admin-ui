@@ -8,8 +8,6 @@
         </Breadcrumb>
 
         <Form :model="formItem" :label-width="140" style="margin-top: 20px">
-
-
             <FormItem label="name:">
                 <Select v-model="formItem.name" filterable class="text_input">
                     <Option v-for="item in enabledPlugins" :value="item" :key="item">{{ item }}</Option>
@@ -111,6 +109,7 @@
             return {
                 pluginId: '',
                 formItem: {
+                    name:'',
                     consumer: {},
                     service: {},
                     route: {},
@@ -124,13 +123,16 @@
                 consumers: [],
                 services: [],
                 routes: [],
-                runOns:['first','second','all']
+                runOns:['first','second','all'],
             }
         },
         watch: {
             name: function (newVal, oldVal) {
                 console.log(newVal + ' ' + oldVal);
-                this.formItem.config = {};
+                if(oldVal){
+                    this.formItem.config = {};
+                }
+
                 this.loadPluginSchema();
             },
             serviceId: function (newVal, oldVal) {
@@ -152,20 +154,38 @@
             this.pluginId = this.$route.params.pluginId;
             if (this.pluginId) {
                 this.loadPlugin();
+            }else{
+                this.loadPlugins();
+                this.loadConsumers();
+                this.loadServices();
             }
-            this.loadPlugins();
-            this.loadConsumers();
-            this.loadServices();
+
+
         },
         methods: {
             loadPlugin() {
                 this._get('/plugins/' + this.pluginId, response => {
+                    console.log(this.formItem);
                     this.formItem = response.data;
+                    if(!this.formItem.consumer) {
+                        this.formItem.consumer={};
+                    }
+                    if(!this.formItem.route) {
+                        this.formItem.route={};
+                    }
+                    if(!this.formItem.service) {
+                        this.formItem.service={};
+                    }
+                    console.log(response.data);
+                    console.log(this.formItem);
+                    this.loadPlugins();
+                    this.loadConsumers();
+                    this.loadServices();
                 });
             },
             loadPlugins() {
                 this._get('/plugins/enabled', response => {
-                    this.enabledPlugins = response.data.enabled_plugins;
+                    this.enabledPlugins=response.data.enabled_plugins;
                 });
             },
             loadPluginSchema() {
@@ -210,7 +230,7 @@
                         let finalFieldName = parent + '.' + fieldName;
                         let formField = this.formField(finalFieldName, type, elementType, defaultValue, fieldValue.values);
                         this.flatFields.push(formField);
-                        this.valueChange(defaultValue, formField);
+                        this.valueChange(formField.defaultValue, formField);
                     }
 
                 }
@@ -229,14 +249,42 @@
                         }
                         let finalFieldName = parent + '.' + fieldName;
                         let formField = this.formField(finalFieldName, field[1].type, elementType, defaultValue, field[1].values);
+
+
+
                         this.flatFields.push(formField);
-                        this.valueChange(defaultValue, formField);
+
+                        this.valueChange(formField.defaultValue, formField);
 
                     }
                 }
             },
 
             formField(fieldName, fieldType, elementType, defaultValue, mapValueFields) {
+
+                console.log(this.formItem);
+                let array = fieldName.split('.');
+                let obj = this.formItem.config;
+                for(let i=1;i<array.length;i++) {
+                    let name = array[i];
+                    if (i < array.length - 1){
+                        //not the last one
+                        if(!obj[name]){
+                            break;
+                        }
+                        obj = obj[name];
+                    } else {
+                        let value=obj[name];
+                        if(value!==undefined){
+                            if(fieldType==='array'||fieldType==='set'){
+                                defaultValue=value.join(',');
+                            }else{
+                                defaultValue=value;
+                            }
+                        }
+                    }
+                }
+
                 return {
                     fieldName: fieldName,
                     fieldType: fieldType,
@@ -295,7 +343,9 @@
                     let name = nameArr[i];
                     if (i < nameArr.length - 1) {
                         //not the last one
-                        obj[name] = {};
+                        if(!obj[name]){
+                            obj[name] = {};
+                        }
                         obj = obj[name];
                     } else {
                         obj[name] = val;

@@ -92,6 +92,11 @@
                     }
                 ],
             }
+        },
+        methods:{
+            edit(pluginId){
+                this.$router.push({path: `/plugins/edit/${pluginId}`});
+            }
         }
     }
 </script>
