@@ -19,51 +19,77 @@
             </FormItem>
 
             <FormItem label="service:">
-                <Select v-model="formItem.service_id" filterable class="text_input_multiple">
+                <Select v-model="formItem.service.id" filterable class="text_input_multiple">
                     <Option v-for="item in services" :value="item.id" :key="item.id">{{ item.id+' '+item.name}}</Option>
                 </Select>
-                <Button type="primary" @click="formItem.service_id=''" size="small" class="clear_button">Clear
+                <Button type="primary" @click="formItem.service.id=''" size="small" class="clear_button">Clear
                 </Button>
                 <span class="field_desc">If this plugin no need assign to a service,leave it blank.</span>
             </FormItem>
 
             <FormItem label="route:">
-                <Select v-model="formItem.route_id" filterable class="text_input_multiple">
+                <Select v-model="formItem.route.id" filterable class="text_input_multiple">
                     <Option v-for="item in routes" :value="item.id" :key="item.id">{{ item.id }}
                     </Option>
                 </Select>
-                <Button type="primary" @click="formItem.route_id=''" size="small" class="clear_button">Clear
+                <Button type="primary" @click="formItem.route.id=''" size="small" class="clear_button">Clear
                 </Button>
                 <span class="field_desc">If this plugin no need assign to a route,leave it blank.</span>
             </FormItem>
 
 
             <FormItem label="consumer:">
-                <Select v-model="formItem.consumer_id" filterable class="text_input_multiple">
+                <Select v-model="formItem.consumer.id" filterable class="text_input_multiple">
                     <Option v-for="item in consumers" :value="item.id" :key="item.id">
                         {{ item.id+' '+item.username+' '+item.custom_id }}
                     </Option>
                 </Select>
-                <Button type="primary" @click="formItem.consumer_id=''" size="small" class="clear_button">Clear
+                <Button type="primary" @click="formItem.consumer.id=''" size="small" class="clear_button">Clear
                 </Button>
                 <span class="field_desc">If this plugin no need assign to a consumer,leave it blank.</span>
             </FormItem>
+
+            <FormItem label="run_on:">
+                <Select v-model="formItem.run_on" filterable class="text_input">
+                    <Option v-for="item in runOns" :value="item" :key="item">
+                        {{ item }}
+                    </Option>
+                </Select>
+                <span class="field_desc">Control on which Kong nodes this plugin will run, given a Service Mesh scenario. </span>
+            </FormItem>
+
+            <FormItem label="enable:">
+                <i-switch v-model="formItem.enabled" size="large">
+                    <span slot="open">true</span>
+                    <span slot="close">false</span>
+                </i-switch>
+                <span class="field_desc">Whether the plugin is applied.</span>
+            </FormItem>
+
+
 
 
             <FormItem :label-width="300" v-for="field in flatFields" :label="field.fieldName+':'"
                       :key="field.fieldName">
 
-                <Input v-if="field.fieldType==='string'" :name="field.fieldName" class="text_input" @input="valueChange($event,field)"
-                       :value="field.defaultValue" ></Input>
-                <Input v-if="field.fieldType==='array'&&field.elementType==='string'" :name="field.fieldName"  @input="valueChange($event,field)"
+                <Input v-if="field.fieldType==='string'" :name="field.fieldName" class="text_input"
+                       @input="valueChange($event,field)"
+                       :value="field.defaultValue"></Input>
+                <Input v-if="field.fieldType==='array'&&field.elementType==='string'" :name="field.fieldName"
+                       @input="valueChange($event,field)" placeholder="Split with comma"
                        class="text_input" :value="field.defaultValue"></Input>
-                <Input v-if="field.fieldType==='set'&&field.elementType==='string'" :name="field.fieldName"  @input="valueChange($event,field)"
+
+                <Input v-if="field.fieldType==='set'&&field.elementType==='string'" :name="field.fieldName"
+                       @input="valueChange($event,field)" placeholder="Split with comma"
                        class="text_input" :value="field.defaultValue"></Input>
                 <InputNumber v-if="field.fieldType==='number'" :name="field.fieldName" class="text_input"
+                             @input="valueChange($event,field)"
                              :value="field.defaultValue"></InputNumber>
                 <InputNumber v-if="field.fieldType==='integer'" :name="field.fieldName" class="text_input"
+                             @input="valueChange($event,field)"
                              :value="field.defaultValue"></InputNumber>
                 <i-switch v-if="field.fieldType==='boolean'" :name="field.fieldName" size="large"
+                          @input="valueChange($event,field)"
                           :value="field.defaultValue">
                     <span slot="open">true</span>
                     <span slot="close">false</span>
@@ -85,25 +111,26 @@
             return {
                 pluginId: '',
                 formItem: {
-                    service_id: '',
-                    route_id: '',
-                    consumer_id:'',
+                    consumer: {},
+                    service: {},
+                    route: {},
                     config: {},
-                    enabled: false,
-                    run_on: ''
-
+                    enabled: true,
+                    run_on: 'first'
                 },
                 enabledPlugins: [],
                 schemaFields: [],
                 flatFields: [],
                 consumers: [],
                 services: [],
-                routes: []
+                routes: [],
+                runOns:['first','second','all']
             }
         },
         watch: {
             name: function (newVal, oldVal) {
                 console.log(newVal + ' ' + oldVal);
+                this.formItem.config = {};
                 this.loadPluginSchema();
             },
             serviceId: function (newVal, oldVal) {
@@ -120,8 +147,8 @@
             }
         },
         mounted() {
-            this.formItem.service_id = this.$route.params.serviceId;
-            this.formItem.consumer_id = this.$route.params.consumerId;
+            this.formItem.service.id = this.$route.params.serviceId;
+            this.formItem.consumer.id = this.$route.params.consumerId;
             this.pluginId = this.$route.params.pluginId;
             if (this.pluginId) {
                 this.loadPlugin();
@@ -145,6 +172,7 @@
                 if (this.name) {
                     this._get('/plugins/schema/' + this.name, response => {
                         this.schemaFields = response.data.fields;
+                        console.log('schemaField');
                         this.flatFields = [];
                         this.unpackFields(this.schemaFields, 'config');
                         for (let field of this.flatFields) {
@@ -170,7 +198,6 @@
 
                     if (type === 'record') {
                         let fieldObj = Object.entries(fieldValue.fields);
-
                         this.unpackRecord(fieldObj, parent + '.' + fieldName);
                     } else {
                         console.log(parent + '.' + fieldName + ':' + type);
@@ -180,8 +207,10 @@
                             elementType = fieldValue.elements.type;
                             defaultValue = fieldValue.elements.default;
                         }
-
-                        this.flatFields.push(this.formField(parent + '.' + fieldName, type, elementType, defaultValue, fieldValue.values));
+                        let finalFieldName = parent + '.' + fieldName;
+                        let formField = this.formField(finalFieldName, type, elementType, defaultValue, fieldValue.values);
+                        this.flatFields.push(formField);
+                        this.valueChange(defaultValue, formField);
                     }
 
                 }
@@ -198,7 +227,11 @@
                             elementType = field[1].elements.type;
                             defaultValue = field[1].elements.default;
                         }
-                        this.flatFields.push(this.formField(parent + '.' + fieldName, field[1].type, elementType, defaultValue, field[1].values));
+                        let finalFieldName = parent + '.' + fieldName;
+                        let formField = this.formField(finalFieldName, field[1].type, elementType, defaultValue, field[1].values);
+                        this.flatFields.push(formField);
+                        this.valueChange(defaultValue, formField);
+
                     }
                 }
             },
@@ -236,45 +269,63 @@
                 });
 
             },
-            valueChange: function (val, field) {
-                console.log(val);
-                console.log(field);
-                let fieldName = field.fieldName;
+            valueChange: function (val, formField) {
+                if (val == null) {
+                    return;
+                }
+                console.log(formField);
+                let fieldName = formField.fieldName;
+                let fieldType = formField.fieldType;
+                let elementType = formField.elementType;
+                if(fieldType==='array'&&elementType==='string') {
+                    val=val.split(',');
+                }
+                if(fieldType==='array'&&elementType==='number') {
+                    let tmpStrArray=val.split(',');
+                    val=[];
+                    tmpStrArray.forEach(str=>{
+                        val.push(parseInt(str));
+                    });
+
+                }
+
                 let nameArr = fieldName.split('.');
                 let obj = this.formItem.config;
                 for (let i = 1; i < nameArr.length; i++) {
                     let name = nameArr[i];
                     if (i < nameArr.length - 1) {
                         //not the last one
-                        if (!Reflect.has(obj, name)) {
-                            Reflect.defineProperty(obj, name, {value: {}})
-                        }
+                        obj[name] = {};
+                        obj = obj[name];
                     } else {
-                        if (!Reflect.has(obj, name)) {
-                            if (field.fieldType === 'string') {
-                                Reflect.defineProperty(obj, name, {value: val})
-                            } else if (field.fieldType === 'number') {
-                                //number
-                                Reflect.defineProperty(obj, name, {value: parseFloat(val)})
-                            } else if (field.fieldType === 'integer') {
-                                Reflect.defineProperty(obj, name, {value: parseInt(val)})
-                            } else if (field.fieldType === 'array' || field.fieldType === 'set') {
-                                let valArray=val.split(',');
-                                if(field.elementType==='string') {
-                                    Reflect.defineProperty(obj, name, {value: valArray})
-                                }else {
-                                    let valArray=val.split(',');
-                                }
-
-                            }
-
-                        }
+                        obj[name] = val;
                     }
-                }
 
-                alert("change")
+                }
             },
             savePlugin() {
+                let _this = this;
+                let formData = JSON.parse(JSON.stringify(this.formItem));
+
+                if(!formData.service.id){
+                    formData.service=null;
+                }
+                if(!formData.consumer.id){
+                    formData.consumer=null;
+                }
+                if(!formData.route.id){
+                    formData.route=null;
+                }
+                if (!this.pluginId) {
+                    this._post('/plugins', formData, () => {
+                        _this.$router.go(-1);
+                    });
+                } else {
+                    //edit
+                    this._patch('/plugins/'+this.pluginId, formData, () => {
+                        _this.$router.go(-1);
+                    });
+                }
 
             }
 
