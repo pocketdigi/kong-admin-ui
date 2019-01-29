@@ -105,9 +105,14 @@ export default new Router({
                     component:AddPlugin
                 },
                 {
+                    path:'plugins/add/consumer/:consumerId',
+                    component:AddPlugin
+                },
+                {
                     path:'plugins/edit/:pluginId',
                     component:AddPlugin
                 },
+
                 {
                     path:'',
                     component:BasicInfo

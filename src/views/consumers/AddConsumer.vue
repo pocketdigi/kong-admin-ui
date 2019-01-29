@@ -20,12 +20,28 @@
                 <Button type="primary" @click="saveConsumer">Save</Button>
             </FormItem>
         </Form>
+
+        <div id="plugins" v-if="consumerId">
+            <Row style="margin-bottom: 10px">
+                <Col span="12"><h1>Plugins:</h1></Col>
+                <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
+                    <Button type="primary" size="small" @click="addPlugin()">Add plugin</Button>
+                </Col>
+            </Row>
+            <PluginTable v-bind:plugins="plugins"></PluginTable>
+
+        </div>
     </div>
 </template>
 
 <script>
+    import moment from 'moment'
+    import PluginTable from '@/components/plugins/PluginTable'
+    import EventBus from '@/event-bus'
+
     export default {
         name: "AddConsumer",
+        components:{PluginTable},
         data() {
             return {
                 formItem: {
@@ -33,14 +49,27 @@
                     custom_id:''
                 },
                 consumerId: '',
-                serviceIdCanChanged: true
+                serviceIdCanChanged: true,
+                plugins:[]
             }
         },
         mounted(){
             this.consumerId = this.$route.params.id;
             if(this.consumerId) {
                 this.loadConsumer();
+                this.loadPlugins();
             }
+
+            EventBus.$on('pluginChange',({pluginId}) => {
+                console.log("plugin change:"+pluginId);
+                for(let plugin of this.plugins) {
+                    if(plugin.id===pluginId) {
+                        this.loadPlugins();
+                        break;
+                    }
+                }
+            });
+
         },
         methods:{
             saveConsumer() {
@@ -67,7 +96,23 @@
                 this._get('/consumers/'+this.consumerId,response =>{
                     this.formItem=response.data;
                 });
+            },
+            loadPlugins(){
+                this._get('/consumers/' + this.consumerId +'/plugins', response => {
+                    this.plugins = response.data.data;
+                    this.plugins.map(function (plugin) {
+                        let createDate = moment.unix(plugin.created_at);
+                        plugin.createAtStr = createDate.format('YYYY-MM-DD HH:mm:ss');
+                    });
+                });
+
+            },
+            addPlugin(){
+                this.$router.push({path: `/plugins/add/consumer/${this.consumerId}`});
             }
+        },
+        destroyed() {
+            EventBus.$off('pluginChange');
         }
     }
 </script>
