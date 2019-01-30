@@ -19,7 +19,7 @@
 
         <Modal
                 @on-ok="addCredential"
-                title="Title"
+                title="Add OAuth 2.0 Credential"
                 v-model="showModal">
             <Form :model="formItem" :label-width="120" style="margin-top: 20px">
                 <FormItem label="name:">
