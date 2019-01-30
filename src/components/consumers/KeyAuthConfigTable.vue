@@ -1,7 +1,7 @@
 <template>
     <div id="config">
         <Row style="margin-bottom: 10px">
-            <Col span="12"><h1>OAuth 2.0 credentials</h1></Col>
+            <Col span="12"><h1>Key Authentication credentials</h1></Col>
             <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
                 <Button type="primary" size="small" @click="showModal=true">Create a Credential</Button>
             </Col>
@@ -19,20 +19,11 @@
 
         <Modal
                 @on-ok="addCredential"
-                title="Add OAuth 2.0 Credential"
+                title="Add Key Authentication Credential"
                 v-model="showModal">
             <Form :model="formItem" :label-width="120" style="margin-top: 20px">
                 <FormItem label="name:">
-                    <Input v-model="formItem.name"  placeholder="Enter name ..." class="text_input"></Input>
-                </FormItem>
-                <FormItem label="client_id:">
-                    <Input v-model="formItem.client_id" placeholder="Enter client_id ..." class="text_input"></Input>
-                </FormItem>
-                <FormItem label="client_secret:">
-                    <Input v-model="formItem.client_secret" placeholder="Enter client_secret ..." class="text_input"></Input>
-                </FormItem>
-                <FormItem label="redirectUrls:">
-                    <Input v-model="redirectUrls" placeholder="Split by comma" class="text_input"></Input>
+                    <Input v-model="formItem.key"  placeholder="Enter key ..." class="text_input"></Input>
                 </FormItem>
             </Form>
         </Modal>
@@ -43,16 +34,13 @@
 <script>
     import moment from 'moment'
     export default {
-        name: "OAuth2ConfigTable",
+        name: "KeyAuthConfigTable",
         props: ['consumerId'],
         data() {
             return {
                 configList: [],
                 formItem:{
-                    name:'',
-                    client_id:'',
-                    client_secret:'',
-                    redirect_uris:[]
+                    key:'',
                 },
                 columns: [
                     {
@@ -60,19 +48,9 @@
                         key: 'id'
                     },
                     {
-                        title: 'name',
-                        key: 'name',
-                        width: 160
-                    },
-                    {
-                        title: 'client_id',
-                        key: 'client_id',
-                        width: 160
-                    },
-                    {
-                        title: 'client_secret',
-                        key: 'client_secret',
-                        width: 160
+                        title: 'key',
+                        key: 'key',
+                        width: 260
                     },
                     {
                         title: 'created_at',
@@ -113,7 +91,7 @@
         },
         methods: {
             loadCredential(){
-                this._get('/consumers/'+this.consumerId+'/oauth2',response=>{
+                this._get('/consumers/'+this.consumerId+'/key-auth',response=>{
                     console.log(response.data);
                     this.configList=response.data.data;
                     this.configList.map(function (config) {
@@ -124,8 +102,12 @@
                 });
             },
             addCredential() {
-                this._post('/consumers/'+this.consumerId+'/oauth2',this.formItem,()=>{
+                if(!this.key) {
+                    this.key=null;
+                }
+                this._post('/consumers/'+this.consumerId+'/key-auth',this.formItem,()=>{
                     this.loadCredential();
+                    this.key=null;
                 });
             },
             deleteDialog(credentialId) {
@@ -134,7 +116,7 @@
                     title: 'Delete Credential',
                     content: '<p>Are you sure you would like to delete</p>' + '<p style="font-weight: bold">' + credentialId + '</p>',
                     onOk: () => {
-                        _this._delete('/consumers/'+this.consumerId+'/oauth2/' + credentialId,()=> {
+                        _this._delete('/consumers/'+this.consumerId+'/key-auth/' + credentialId,()=> {
                             _this.$Message.info('Credential deleted!');
                             _this.loadCredential();
                         });

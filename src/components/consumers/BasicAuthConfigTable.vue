@@ -26,7 +26,7 @@
                     <Input v-model="formItem.username"  placeholder="Enter username ..." class="text_input"></Input>
                 </FormItem>
                 <FormItem label="password:">
-                    <Input v-model="formItem.password" placeholder="Enter secret ..." class="text_input"></Input>
+                    <Input v-model="formItem.password" placeholder="Enter password ..." class="text_input"></Input>
                 </FormItem>
             </Form>
         </Modal>
@@ -59,7 +59,7 @@
                     {
                         title: 'password',
                         key: 'password',
-                        width: 160
+                        width: 280
                     },
                     {
                         title: 'created_at',

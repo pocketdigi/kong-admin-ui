@@ -1,7 +1,7 @@
 <template>
     <div id="config">
         <Row style="margin-bottom: 10px">
-            <Col span="12"><h1>OAuth 2.0 credentials</h1></Col>
+            <Col span="12"><h1>JWT credentials</h1></Col>
             <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
                 <Button type="primary" size="small" @click="showModal=true">Create a Credential</Button>
             </Col>
@@ -19,20 +19,23 @@
 
         <Modal
                 @on-ok="addCredential"
-                title="Add OAuth 2.0 Credential"
+                title="Add JWT Credential"
                 v-model="showModal">
             <Form :model="formItem" :label-width="120" style="margin-top: 20px">
-                <FormItem label="name:">
-                    <Input v-model="formItem.name"  placeholder="Enter name ..." class="text_input"></Input>
+                <FormItem label="key:">
+                    <Input v-model="formItem.key"  placeholder="Enter key ..." class="text_input"></Input>
                 </FormItem>
-                <FormItem label="client_id:">
-                    <Input v-model="formItem.client_id" placeholder="Enter client_id ..." class="text_input"></Input>
+                <FormItem label="algorithm:">
+                    <Select v-model="formItem.algorithm" style="width:200px">
+                        <Option v-for="item in algorithms" :value="item" :key="item">{{ item }}</Option>
+                    </Select>
                 </FormItem>
-                <FormItem label="client_secret:">
-                    <Input v-model="formItem.client_secret" placeholder="Enter client_secret ..." class="text_input"></Input>
+
+                <FormItem label="rsa_public_key:">
+                    <Input v-model="formItem.rsa_public_key" placeholder="Enter rsa_public_key ..." class="text_input"></Input>
                 </FormItem>
-                <FormItem label="redirectUrls:">
-                    <Input v-model="redirectUrls" placeholder="Split by comma" class="text_input"></Input>
+                <FormItem label="secret:">
+                    <Input v-model="formItem.secret" placeholder="Enter secret ..." class="text_input"></Input>
                 </FormItem>
             </Form>
         </Modal>
@@ -43,16 +46,16 @@
 <script>
     import moment from 'moment'
     export default {
-        name: "OAuth2ConfigTable",
+        name: "JWTConfigTable",
         props: ['consumerId'],
         data() {
             return {
                 configList: [],
                 formItem:{
-                    name:'',
-                    client_id:'',
-                    client_secret:'',
-                    redirect_uris:[]
+                    key:'',
+                    algorithm:'',
+                    rsa_public_key:'',
+                    secret:''
                 },
                 columns: [
                     {
@@ -60,18 +63,23 @@
                         key: 'id'
                     },
                     {
-                        title: 'name',
-                        key: 'name',
+                        title: 'key',
+                        key: 'key',
                         width: 160
                     },
                     {
-                        title: 'client_id',
-                        key: 'client_id',
+                        title: 'algorithm',
+                        key: 'algorithm',
                         width: 160
                     },
                     {
-                        title: 'client_secret',
-                        key: 'client_secret',
+                        title: 'rsa_public_key',
+                        key: 'rsa_public_key',
+                        width: 160
+                    },
+                    {
+                        title: 'secret',
+                        key: 'secret',
                         width: 160
                     },
                     {
@@ -87,33 +95,16 @@
                         align: 'center'
                     }
                 ],
-                showModal:false
+                showModal:false,
+                algorithms:['HS256','HS384','HS512','RS256','ES256']
             }
         },
         mounted(){
             this.loadCredential();
         },
-        computed:{
-            redirectUrls:{
-                get(){
-                    if(this.formItem.redirect_uris.length>0){
-                        return this.formItem.redirect_uris.join(',');
-                    }
-                    return '';
-                },
-                set(newValue){
-                    if(newValue){
-                        this.formItem.redirect_uris=newValue.split(',');
-                    }else{
-                        this.formItem.redirect_uris=[];
-                    }
-
-                }
-            }
-        },
         methods: {
             loadCredential(){
-                this._get('/consumers/'+this.consumerId+'/oauth2',response=>{
+                this._get('/consumers/'+this.consumerId+'/jwt',response=>{
                     console.log(response.data);
                     this.configList=response.data.data;
                     this.configList.map(function (config) {
@@ -124,8 +115,24 @@
                 });
             },
             addCredential() {
-                this._post('/consumers/'+this.consumerId+'/oauth2',this.formItem,()=>{
+                if(!this.formItem.rsa_public_key){
+                    this.formItem.rsa_public_key=null;
+                }
+                if(!this.formItem.secret){
+                    this.formItem.secret=null;
+                }
+                if(!this.formItem.key){
+                    this.formItem.key=null;
+                }
+                if(!this.formItem.algorithm){
+                    this.formItem.algorithm=null;
+                }
+                this._post('/consumers/'+this.consumerId+'/jwt',this.formItem,()=>{
                     this.loadCredential();
+                    this.formItem.algorithm=null;
+                    this.formItem.key=null;
+                    this.formItem.secret=null;
+                    this.formItem.rsa_public_key=null;
                 });
             },
             deleteDialog(credentialId) {
@@ -134,7 +141,7 @@
                     title: 'Delete Credential',
                     content: '<p>Are you sure you would like to delete</p>' + '<p style="font-weight: bold">' + credentialId + '</p>',
                     onOk: () => {
-                        _this._delete('/consumers/'+this.consumerId+'/oauth2/' + credentialId,()=> {
+                        _this._delete('/consumers/'+this.consumerId+'/jwt/' + credentialId,()=> {
                             _this.$Message.info('Credential deleted!');
                             _this.loadCredential();
                         });
