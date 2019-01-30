@@ -29,19 +29,23 @@
                 </Col>
             </Row>
             <PluginTable v-bind:plugins="plugins"></PluginTable>
-
         </div>
+
+        <HMACAuthConfigTable  v-bind:consumerId="consumerId" v-if="consumerId"></HMACAuthConfigTable>
+
+
     </div>
 </template>
 
 <script>
     import moment from 'moment'
     import PluginTable from '@/components/plugins/PluginTable'
+    import HMACAuthConfigTable from '@/components/consumers/HMACAuthConfigTable'
     import EventBus from '@/event-bus'
 
     export default {
         name: "AddConsumer",
-        components:{PluginTable},
+        components:{PluginTable,HMACAuthConfigTable},
         data() {
             return {
                 formItem: {
@@ -50,7 +54,8 @@
                 },
                 consumerId: '',
                 serviceIdCanChanged: true,
-                plugins:[]
+                plugins:[],
+                configHmacAuth:[]
             }
         },
         mounted(){
@@ -128,5 +133,8 @@
 
     .text_input_multiple {
         max-width: 400px;
+    }
+    #plugin-config{
+        margin-top: 10px;
     }
 </style>
