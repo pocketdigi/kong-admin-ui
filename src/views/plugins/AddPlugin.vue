@@ -68,11 +68,11 @@
                        @input="valueChange($event,field)"
                        :value="field.defaultValue"></Input>
                 <Input v-if="field.fieldType==='array'&&field.elementType==='string'" :name="field.fieldName"
-                       @input="valueChange($event,field)" placeholder="Split with comma"
+                       @input="valueChange($event,field)" placeholder="Split by comma"
                        class="text_input" :value="field.defaultValue"></Input>
 
                 <Input v-if="field.fieldType==='set'&&field.elementType==='string'" :name="field.fieldName"
-                       @input="valueChange($event,field)" placeholder="Split with comma"
+                       @input="valueChange($event,field)" placeholder="Split by comma"
                        class="text_input" :value="field.defaultValue"></Input>
                 <InputNumber v-if="field.fieldType==='number'" :name="field.fieldName" class="text_input"
                              @input="valueChange($event,field)"

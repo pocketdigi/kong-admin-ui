@@ -32,6 +32,7 @@
         </div>
 
         <HMACAuthConfigTable  v-bind:consumerId="consumerId" v-if="consumerId"></HMACAuthConfigTable>
+        <OAuth2ConfigTable  v-bind:consumerId="consumerId" v-if="consumerId"></OAuth2ConfigTable>
 
 
     </div>
@@ -41,11 +42,12 @@
     import moment from 'moment'
     import PluginTable from '@/components/plugins/PluginTable'
     import HMACAuthConfigTable from '@/components/consumers/HMACAuthConfigTable'
+    import OAuth2ConfigTable from '@/components/consumers/OAuth2ConfigTable'
     import EventBus from '@/event-bus'
 
     export default {
         name: "AddConsumer",
-        components:{PluginTable,HMACAuthConfigTable},
+        components:{PluginTable,HMACAuthConfigTable,OAuth2ConfigTable},
         data() {
             return {
                 formItem: {
