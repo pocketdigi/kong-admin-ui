@@ -18,6 +18,7 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 * Upstream management(include target)
 * Consumer management
 * Plugin management
+* Authentication management(Support Basic Authentication, HMAC Authentication, JWT, Key Authentication, OAuth 2.0 Authentication)
 
 **Only support kong 0.14.x and above.**
 
