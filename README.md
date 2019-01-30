@@ -10,7 +10,18 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 
 [demo on pocketdigi.com](http://kong-admin.pocketdigi.com) `http` protocol,the server is in China.
 
-### screenshots
+
+### Features
+* Basic Info (configurations and status)
+* Service management
+* Route management
+* Upstream management(include target)
+* Consumer management
+* Plugin management
+
+**Only support kong 0.14.x and above.**
+
+### Screenshots
 
 
 ![basic info](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/basic_info.png)
