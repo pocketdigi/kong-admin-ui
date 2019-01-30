@@ -17,33 +17,27 @@
             </FormItem>
 
             <FormItem label="service:">
-                <Select v-model="formItem.service.id" filterable class="text_input_multiple">
+                <Select v-model="formItem.service.id" filterable class="text_input_multiple" ref="service" clearable>
                     <Option v-for="item in services" :value="item.id" :key="item.id">{{ item.id+' '+item.name}}</Option>
                 </Select>
-                <Button type="primary" @click="formItem.service.id=''" size="small" class="clear_button">Clear
-                </Button>
                 <span class="field_desc">If this plugin no need assign to a service,leave it blank.</span>
             </FormItem>
 
             <FormItem label="route:">
-                <Select v-model="formItem.route.id" filterable class="text_input_multiple">
+                <Select v-model="formItem.route.id" filterable class="text_input_multiple" clearable>
                     <Option v-for="item in routes" :value="item.id" :key="item.id">{{ item.id }}
                     </Option>
                 </Select>
-                <Button type="primary" @click="formItem.route.id=''" size="small" class="clear_button">Clear
-                </Button>
                 <span class="field_desc">If this plugin no need assign to a route,leave it blank.</span>
             </FormItem>
 
 
             <FormItem label="consumer:">
-                <Select v-model="formItem.consumer.id" filterable class="text_input_multiple">
+                <Select v-model="formItem.consumer.id" filterable class="text_input_multiple" clearable>
                     <Option v-for="item in consumers" :value="item.id" :key="item.id">
                         {{ item.id+' '+item.username+' '+item.custom_id }}
                     </Option>
                 </Select>
-                <Button type="primary" @click="formItem.consumer.id=''" size="small" class="clear_button">Clear
-                </Button>
                 <span class="field_desc">If this plugin no need assign to a consumer,leave it blank.</span>
             </FormItem>
 
@@ -302,7 +296,7 @@
             },
             loadServices() {
                 this._get('/services', response => {
-                    Array.prototype.push.apply(this.services, response.data.data);
+                    this.services=response.data.data;
                 });
             },
             loadRoutes() {
@@ -377,6 +371,10 @@
                     });
                 }
 
+            },
+            clearService() {
+                this.formItem.service.id='';
+                this.$refs.service.clearSingleSelect();
             }
 
         }

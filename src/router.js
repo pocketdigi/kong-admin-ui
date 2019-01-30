@@ -15,6 +15,7 @@ import AddUpstream from './views/upstreams/AddUpstream'
 import ConsumerList from './views/consumers/ConsumerList'
 import AddConsumer from './views/consumers/AddConsumer'
 import AddPlugin from './views/plugins/AddPlugin'
+import PluginList from './views/plugins/PluginList'
 
 Vue.use(Router)
 
@@ -99,6 +100,14 @@ export default new Router({
                 {
                     path:'consumers/edit/:id',
                     component:AddConsumer
+                },
+                {
+                    path:'plugins',
+                    component:PluginList
+                },
+                {
+                    path:'plugins/add',
+                    component:AddPlugin
                 },
                 {
                     path:'plugins/add/service/:serviceId',
