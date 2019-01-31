@@ -17,7 +17,7 @@
             </FormItem>
 
             <FormItem label="service:">
-                <Select v-model="formItem.service.id" filterable class="text_input_multiple" ref="service" clearable>
+                <Select v-model="serviceId" filterable class="text_input_multiple" ref="service" clearable>
                     <Option v-for="item in services" :value="item.id" :key="item.id">{{ item.id+' '+item.name}}</Option>
                 </Select>
                 <span class="field_desc">If this plugin no need assign to a service,leave it blank.</span>
@@ -109,7 +109,7 @@
                     route: {},
                     config: {},
                     enabled: true,
-                    run_on: 'first'
+                    run_on: 'first',
                 },
                 enabledPlugins: [],
                 schemaFields: [],
@@ -122,28 +122,34 @@
         },
         watch: {
             name: function (newVal, oldVal) {
-                console.log(newVal + ' ' + oldVal);
                 if(oldVal){
                     this.formItem.config = {};
                 }
 
                 this.loadPluginSchema();
-            },
-            serviceId: function (newVal, oldVal) {
-                this.formItem.route_id = '';
-                this.loadRoutes();
             }
         },
         computed: {
             name() {
                 return this.formItem.name;
             },
-            serviceId() {
-                return this.formItem.service_id;
+            serviceId: {
+                get(){
+                    return this.formItem.service.id;
+                },
+                set(newValue){
+                    if(newValue){
+                        this.formItem.service.id=newValue;
+                        this.loadRoutes();
+                    }else{
+                        this.formItem.service.id=null;
+                    }
+                }
+
             }
         },
         mounted() {
-            this.formItem.service.id = this.$route.params.serviceId;
+            this.serviceId = this.$route.params.serviceId;
             this.formItem.consumer.id = this.$route.params.consumerId;
             this.pluginId = this.$route.params.pluginId;
             if (this.pluginId) {
@@ -159,8 +165,8 @@
         methods: {
             loadPlugin() {
                 this._get('/plugins/' + this.pluginId, response => {
-                    console.log(this.formItem);
                     this.formItem = response.data;
+                    this.serviceId=this.formItem.service.id;
                     if(!this.formItem.consumer) {
                         this.formItem.consumer={};
                     }
@@ -170,8 +176,6 @@
                     if(!this.formItem.service) {
                         this.formItem.service={};
                     }
-                    console.log(response.data);
-                    console.log(this.formItem);
                     this.loadPlugins();
                     this.loadConsumers();
                     this.loadServices();
@@ -186,7 +190,6 @@
                 if (this.name) {
                     this._get('/plugins/schema/' + this.name, response => {
                         this.schemaFields = response.data.fields;
-                        console.log('schemaField');
                         this.flatFields = [];
                         this.unpackFields(this.schemaFields, 'config');
                         for (let field of this.flatFields) {
@@ -202,7 +205,6 @@
 
             },
             unpackFields(fields, parent) {
-                console.log("unpackFields:" + fields.length);
                 for (let i = 0; i < fields.length; i++) {
                     let field = fields[i];
                     let entries = Object.entries(field);
@@ -214,7 +216,6 @@
                         let fieldObj = Object.entries(fieldValue.fields);
                         this.unpackRecord(fieldObj, parent + '.' + fieldName);
                     } else {
-                        console.log(parent + '.' + fieldName + ':' + type);
                         let elementType;
                         let defaultValue = fieldValue.default;
                         if (fieldValue.elements) {
@@ -256,7 +257,6 @@
 
             formField(fieldName, fieldType, elementType, defaultValue, mapValueFields) {
 
-                console.log(this.formItem);
                 let array = fieldName.split('.');
                 let obj = this.formItem.config;
                 for(let i=1;i<array.length;i++) {
@@ -300,11 +300,10 @@
                 });
             },
             loadRoutes() {
-                console.log(this.formItem.service_id);
                 this.routes = [];
                 let url = '/routes?size=1000';
-                if (this.formItem.service_id) {
-                    url = '/services/' + this.formItem.service_id + '/routes'
+                if (this.formItem.service.id) {
+                    url = '/services/' + this.formItem.service.id + '/routes'
                 }
                 this._get(url, response => {
                     this.routes = response.data.data;
@@ -315,7 +314,6 @@
                 if (val == null) {
                     return;
                 }
-                console.log(formField);
                 let fieldName = formField.fieldName;
                 let fieldType = formField.fieldType;
                 let elementType = formField.elementType;
