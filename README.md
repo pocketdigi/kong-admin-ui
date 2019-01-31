@@ -39,7 +39,9 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 
 ![consumer list](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/consumer_list.png)
 
+![consumer detail](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/consumer_detail.png)
 
+![plugin list](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/plugin_list.png)
 ## Project setup
 ```
 npm install
