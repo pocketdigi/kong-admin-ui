@@ -2,7 +2,7 @@
     <div id="content">
         <Breadcrumb>
             <BreadcrumbItem to="/">Home</BreadcrumbItem>
-            <BreadcrumbItem to="/routes">Routes</BreadcrumbItem>
+            <BreadcrumbItem to="/routes">Route</BreadcrumbItem>
         </Breadcrumb>
         <Row>
             <Col span="12"> <h1>Route List:</h1></Col>
@@ -42,7 +42,6 @@
             this.loadRoutes();
 
             EventBus.$on('routeChange',({routeId}) => {
-                console.log("route change:"+routeId);
                 for(let route of this.routes) {
                     if(route.id===routeId) {
                         this.loadRoutes();

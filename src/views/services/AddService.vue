@@ -113,29 +113,27 @@
                 return true;
             },
             saveService () {
-                console.log("save");
                 let _this = this;
-                if (this.formItem.name==='') {
-                    this.formItem.name=null;
+                let formData = JSON.parse(JSON.stringify(this.formItem));
+                if (formData.name==='') {
+                    formData.name=null;
                 }
-                if (this.formItem.host==='') {
-                    this.formItem.host=null;
+                if (formData.host==='') {
+                    formData.host=null;
                 }
-                if (this.formItem.path==='') {
-                    this.formItem.path=null;
+                if (formData.path==='') {
+                    formData.path=null;
                 }
-                if (this.formItem.url==='') {
-                    this.formItem.url=null;
+                if (formData.url==='') {
+                    formData.url=null;
                 }
                 if(!this.edit){
-                    this._post('/services/',this.formItem,response=>{
-                        console.log(response.data);
+                    this._post('/services/',formData,()=>{
                         _this.$router.push('/services');
                     });
                 }else{
                     //edit
-                    this._patch('/services/'+this.serviceId,this.formItem,response => {
-                        console.log(response.data);
+                    this._patch('/services/'+this.serviceId,formData,() => {
                         _this.$router.go(-1);
                     });
                 }

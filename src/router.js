@@ -12,6 +12,10 @@ import RouteList from './views/routes/RouteList'
 import AddRoute from './views/routes/AddRoute'
 import UpstreamList from './views/upstreams/UpstreamList'
 import AddUpstream from './views/upstreams/AddUpstream'
+import ConsumerList from './views/consumers/ConsumerList'
+import AddConsumer from './views/consumers/AddConsumer'
+import AddPlugin from './views/plugins/AddPlugin'
+import PluginList from './views/plugins/PluginList'
 
 Vue.use(Router)
 
@@ -85,6 +89,39 @@ export default new Router({
                     path:'upstreams/add/:name',
                     component:AddUpstream
                 },
+                {
+                    path:'consumers',
+                    component:ConsumerList
+                },
+                {
+                    path:'consumers/add',
+                    component:AddConsumer
+                },
+                {
+                    path:'consumers/edit/:id',
+                    component:AddConsumer
+                },
+                {
+                    path:'plugins',
+                    component:PluginList
+                },
+                {
+                    path:'plugins/add',
+                    component:AddPlugin
+                },
+                {
+                    path:'plugins/add/service/:serviceId',
+                    component:AddPlugin
+                },
+                {
+                    path:'plugins/add/consumer/:consumerId',
+                    component:AddPlugin
+                },
+                {
+                    path:'plugins/edit/:pluginId',
+                    component:AddPlugin
+                },
+
                 {
                     path:'',
                     component:BasicInfo

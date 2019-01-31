@@ -4,7 +4,7 @@
             <Menu :theme="theme2" width="auto" v-bind:active-name="activeName" v-bind:open-names="openNames" ref="menu">
                 <router-link to="/">
                     <MenuItem name="index">
-                        <Icon type="ios-home"/>
+                        <Icon type="ios-stats"/>
                         Kong Info
                     </MenuItem>
                 </router-link>
@@ -29,11 +29,31 @@
                 </Submenu>
                 <Submenu name="upstream">
                     <template slot="title">
-                        <Icon type="ios-stats"/>
+                        <Icon type="ios-desktop"/>
                         Upstream
                     </template>
                     <router-link to="/upstreams">
                         <MenuItem name="upstream-list">Upstream List</MenuItem>
+                    </router-link>
+
+                </Submenu>
+                <Submenu name="consumer">
+                    <template slot="title">
+                        <Icon type="ios-person"/>
+                        Consumer
+                    </template>
+                    <router-link to="/consumers">
+                        <MenuItem name="consumer-list">Consumer List</MenuItem>
+                    </router-link>
+
+                </Submenu>
+                <Submenu name="plugin">
+                    <template slot="title">
+                        <Icon type="ios-glasses"/>
+                        Plugin
+                    </template>
+                    <router-link to="/plugins">
+                        <MenuItem name="plugin-list">Plugin List</MenuItem>
                     </router-link>
 
                 </Submenu>

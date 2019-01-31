@@ -10,7 +10,19 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 
 [demo on pocketdigi.com](http://kong-admin.pocketdigi.com) `http` protocol,the server is in China.
 
-### screenshots
+
+### Features
+* Basic Info (configurations and status)
+* Service management
+* Route management
+* Upstream management(include target)
+* Consumer management
+* Plugin management
+* Authentication management(Support Basic Authentication, HMAC Authentication, JWT, Key Authentication, OAuth 2.0 Authentication)
+
+**Only support kong 0.14.x and above.**
+
+### Screenshots
 
 
 ![basic info](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/basic_info.png)
@@ -25,9 +37,11 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 
 ![upstream list](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/upstream_list.png)
 
+![consumer list](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/consumer_list.png)
 
+![consumer detail](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/consumer_detail.png)
 
-
+![plugin list](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/plugin_list.png)
 ## Project setup
 ```
 npm install

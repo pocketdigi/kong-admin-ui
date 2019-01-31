@@ -37,7 +37,7 @@
                     {
                         title: 'service',
                         key: 'service',
-                        width:160,
+                        width:180,
                         render:function (h, params) {
                             return h('router-link',{props: {to:'/services/'+params.row.service.id}},params.row.service.id);
                         }
