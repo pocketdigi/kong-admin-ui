@@ -144,7 +144,6 @@
                 });
             },
             next() {
-                console.log("next");
                 let offset=this.offset;
                 this.loadServices(this.offset);
                 this.offsetStack.push(offset);

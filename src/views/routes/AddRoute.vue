@@ -142,7 +142,6 @@
             this.routeId = this.$route.params.id;
             this.serviceId = this.$route.params.serviceId;
             this.edit = this.routeId != null;
-            console.log("mounted");
             if (this.serviceId != null) {
                 this.formItem.service.id = this.serviceId;
                 this.serviceIdCanChanged = false;
@@ -166,14 +165,12 @@
                 }
 
                 if (!this.edit) {
-                    this._post('/routes/', this.formItem, response => {
-                        console.log(response.data);
+                    this._post('/routes/', this.formItem, () => {
                         _this.$router.go(-1);
                     });
                 } else {
                     //edit
-                    this._patch('/routes/' + this.routeId, this.formItem, response => {
-                        console.log(response.data);
+                    this._patch('/routes/' + this.routeId, this.formItem, () => {
                         _this.$router.go(-1);
                     });
                 }

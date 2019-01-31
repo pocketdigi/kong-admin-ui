@@ -128,14 +128,12 @@
                     formData.url=null;
                 }
                 if(!this.edit){
-                    this._post('/services/',formData,response=>{
-                        console.log(response.data);
+                    this._post('/services/',formData,()=>{
                         _this.$router.push('/services');
                     });
                 }else{
                     //edit
-                    this._patch('/services/'+this.serviceId,formData,response => {
-                        console.log(response.data);
+                    this._patch('/services/'+this.serviceId,formData,() => {
                         _this.$router.go(-1);
                     });
                 }

@@ -136,7 +136,6 @@
                 });
             },
             next() {
-                console.log("next");
                 let offset=this.offset;
                 this.loadUpstreams(this.offset);
                 this.offsetStack.push(offset);

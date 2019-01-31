@@ -138,9 +138,7 @@
         mounted() {
 
             EventBus.$emit('changePage', {activeName: 'service-list', openNames: ['service']});
-            console.log(this.$route.params.id);
             EventBus.$on('routeChange', ({routeId}) => {
-                console.log("route change:" + routeId);
                 for (let route of this.routes) {
                     if (route.id === routeId) {
                         this.loadRoutes();
@@ -149,7 +147,6 @@
                 }
             });
             EventBus.$on('pluginChange',({pluginId}) => {
-                console.log("plugin change:"+pluginId);
                 for(let plugin of this.plugins) {
                     if(plugin.id===pluginId) {
                         this.loadPlugins();

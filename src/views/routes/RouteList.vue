@@ -42,7 +42,6 @@
             this.loadRoutes();
 
             EventBus.$on('routeChange',({routeId}) => {
-                console.log("route change:"+routeId);
                 for(let route of this.routes) {
                     if(route.id===routeId) {
                         this.loadRoutes();

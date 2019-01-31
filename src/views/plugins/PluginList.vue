@@ -41,7 +41,6 @@
             this.loadPlugins(null);
             EventBus.$emit('changePage',{activeName:'plugin-list',openNames:['plugin']});
             EventBus.$on('pluginChange',({pluginId}) => {
-                console.log("plugin change:"+pluginId);
                 for(let plugin of this.plugins) {
                     if(plugin.id===pluginId) {
                         this.loadPlugins();

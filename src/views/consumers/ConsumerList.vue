@@ -42,7 +42,6 @@
             this.loadConsumers();
 
             EventBus.$on('consumerChange',({consumerId}) => {
-                console.log("consumer change:"+consumerId);
                 for(let consumer of this.consumers) {
                     if(consumer.id===consumerId) {
                         this.loadConsumers();

@@ -92,7 +92,6 @@
         methods: {
             loadCredential(){
                 this._get('/consumers/'+this.consumerId+'/key-auth',response=>{
-                    console.log(response.data);
                     this.configList=response.data.data;
                     this.configList.map(function (config) {
                         let createDate = moment.unix(config.created_at);
