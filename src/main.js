@@ -5,20 +5,45 @@ import router from './router'
 import request from './request'
 import iView from 'iview';
 import VueI18n from 'vue-i18n';
-import en from 'iview/dist/locale/en-US';
-import zh from 'iview/dist/locale/zh-CN';
+import iViewEn from 'iview/dist/locale/en-US';
+import iViewZh from 'iview/dist/locale/zh-CN';
+import {default as en} from './lang/en.js'
+import {default as zh} from './lang/zh.js'
+
+// Vue.use(VueI18n);
+// Vue.use(iView);
+//
+// Vue.config.lang = 'en-US';
+// Vue.locale('en-US', en);
+// Vue.locale('zh-CN', zh);
+//
+// Vue.config.productionTip = true;
+// Vue.use(request);
+//
+// new Vue({
+//   render: h => h(App),
+//   router:router
+// }).$mount('#app');
+
 
 Vue.use(VueI18n);
 Vue.use(iView);
-
-Vue.config.lang = 'en-US';
-Vue.locale('en-US', en);
-Vue.locale('zh-CN', zh);
-
-Vue.config.productionTip = true;
+Vue.locale = () => {};
 Vue.use(request);
 
+const messages = {
+    en: Object.assign(en, iViewEn),
+    zh: Object.assign(zh, iViewZh)
+};
+
+// Create VueI18n instance with options
+const i18n = new VueI18n({
+    locale: 'zh',  // set locale
+    messages  // set locale messages
+});
+
 new Vue({
-  render: h => h(App),
-  router:router
+    i18n,
+    render: h => h(App),
+    router:router
 }).$mount('#app');

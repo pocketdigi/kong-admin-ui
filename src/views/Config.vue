@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 style="margin-top: 100px">Kong Admin UI</h1>
+        <h1 style="margin-top: 100px">{{$t('app.name')}}</h1>
         <Row id="config">
             <Col span="6">&nbsp;</Col>
             <Col span="12">
@@ -9,16 +9,15 @@
                         <Input v-model="formItem.address" placeholder="http://192.168.0.200:8001"></Input>
                     </FormItem>
                 </Form>
-                <Button type="primary" @click="test">Enter</Button>&nbsp;
-                <Button type="success" @click="clear">Clear address</Button>
+                <Button type="primary" @click="test">{{$t('config.button.enter')}}</Button>&nbsp;
+                <Button type="success" @click="clear">{{$t('config.button.clear')}}</Button>
             </Col>
-            <Col span="6">&nbsp;</Col>
+            <Col span="6">&nbsp;</Col>~
         </Row>
         <div class="notice">
-            <p>This app will not connect other servers except your kong admin api.Your kong admin api address is save in
-                browser's localstorage, so it's safety to manage your kong.</p>
-            <p>All requests to Kong admin api is send by your browser,so make sure your device can access Kong admin api
-                without any security auth.</p>
+            <p>{{$t('config.button.notice1')}}</p>
+            <p>{{$t('config.button.notice2')}}</p>
+
         </div>
         <a href="https://github.com/pocketdigi/kong-admin-ui"><img
                 style="position: absolute; top: 0; left: 0; border: 0;"
@@ -34,14 +33,14 @@
         data() {
             const validatePass = (rule, value, callback) => {
                 if (value === '') {
-                    callback(new Error('Please enter your Kong admin api url'));
+                    callback(new Error(this.$t('config.error.urlEmpty')));
                 } else {
                     if (!value.startsWith('http://') && !value.startsWith('https://')) {
-                        callback(new Error('url error,must start with http:// or https://'));
+                        callback(new Error(this.$t('config.error.urlError')));
                         return;
                     }
                     if(value.endsWith("/")) {
-                        callback(new Error('url error,cant\'t end with /'));
+                        callback(new Error(this.$t('config.error.urlEndWithSlash')));
                         this.formItem.address=this.formItem.address.substr(0,this.formItem.address.length-1)
                         return;
                     }
@@ -79,7 +78,7 @@
                                 let version = kongInfo.version;
                                 if (version == null) {
                                     this.$Message.error({
-                                        content: 'Can\'t get your Kong\'s version,please check the address you input',
+                                        content: this.$t('config.error.apiError'),
                                         duration: 10
                                     });
 
@@ -87,6 +86,7 @@
                                 let versionArr = version.split('.');
                                 if (versionArr.length !== 3) {
                                     this.versionNotSupport(version);
+                                    return;
                                 }
                                 if (versionArr[0] > 0) {
                                     this.saveConfig();
@@ -100,22 +100,20 @@
                             })
                             .catch(function () {
                                 _this.$Message.error({
-                                    content: 'Failed to connect with your kong admin api,please check the address you input,or your computer has no permission to visit the admin api',
+                                    content: _this.$t('config.error.connectFail'),
                                     duration: 10
                                 });
 
                             })
                     } else {
-                        this.$Message.error('Kong admin api url error');
+                        this.$Message.error(this.$t('config.error.urlInvalid'));
                     }
                 });
-
-
 
             },
             versionNotSupport(version) {
                 this.$Message.error({
-                    content: 'Version ' + version + ' is not support,We only support 0.14.0 and higher',
+                    content: this.$t('config.error.versionNotSupport',{version:version}),
                     duration: 10
                 });
             },
