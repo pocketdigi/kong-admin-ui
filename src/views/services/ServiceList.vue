@@ -1,13 +1,13 @@
 <template>
     <div id="content">
         <Breadcrumb>
-            <BreadcrumbItem to="/">Home</BreadcrumbItem>
-            <BreadcrumbItem to="/services">Service</BreadcrumbItem>
+            <BreadcrumbItem to="/">{{$t('breadcrumb.home')}}</BreadcrumbItem>
+            <BreadcrumbItem to="/services">{{$t('breadcrumb.service_list')}}</BreadcrumbItem>
         </Breadcrumb>
         <Row>
-            <Col span="12"> <h1>Service List:</h1></Col>
+            <Col span="12"> <h1>{{$t('breadcrumb.service_list')}}:</h1></Col>
             <Col span="12" style="text-align:right;position: absolute;top: 30%;right: 0px">
-                <Button type="primary" size="small" @click="addService">Add Service</Button>
+                <Button type="primary" size="small" @click="addService">{{$t('service.addService')}}</Button>
             </Col>
         </Row>
         <div id="table">
@@ -16,8 +16,8 @@
                     <strong>{{ row.name }}</strong>
                 </template>
                 <template slot-scope="{ row }" slot="action">
-                    <Button type="primary" size="small" style="margin-right: 5px" @click="show(row.id)">View</Button>
-                    <Button type="error" size="small" @click="deleteDialog(row.id)">Delete</Button>
+                    <Button type="primary" size="small" style="margin-right: 5px" @click="show(row.id)">{{$t('common.view')}}</Button>
+                    <Button type="error" size="small" @click="deleteDialog(row.id)">{{$t('common.delete')}}</Button>
                 </template>
             </Table>
             <div class="page">
@@ -108,11 +108,11 @@
             deleteDialog(serviceId) {
                 let _this = this;
                 this.$Modal.confirm({
-                    title: 'Delete Service',
-                    content: '<p>Are you sure you would like to delete</p>' + '<p style="font-weight: bold">' + serviceId + '</p>',
+                    title: this.$t('common.delete'),
+                    content: this.$t('common.deleteMessage',{id:serviceId}),
                     onOk: () => {
                         _this._delete('/services/' + serviceId, () => {
-                            this.$Message.info('Service deleted!');
+                            this.$Message.info(this.$t('common.deleted',{type:'Service'}));
                             this.loadServices();
                         });
                     },
@@ -134,9 +134,9 @@
                     this.services = [];
                     Array.prototype.push.apply(this.services, response.data.data);
                     this.services.map(function (service) {
-                        var createDate = moment.unix(service.created_at)
+                        let createDate = moment.unix(service.created_at)
                         service.createAtStr = createDate.format('YYYY-MM-DD HH:mm:ss');
-                        var updatedDate = moment.unix(service.updated_at)
+                        let updatedDate = moment.unix(service.updated_at)
                         service.updatedAtStr = updatedDate.format('YYYY-MM-DD HH:mm:ss');
                     });
                     this.offset=response.data.offset;

@@ -25,11 +25,19 @@ import {default as zh} from './lang/zh.js'
 //   router:router
 // }).$mount('#app');
 
+Vue.use(request);
 
 Vue.use(VueI18n);
-Vue.use(iView);
+Vue.use(iView, {
+    i18n: function(path, options) {
+        let value = i18n.t(path, options)
+        if (value !== null && value !== undefined) {
+            return value
+        }
+        return ''
+    }
+});
 Vue.locale = () => {};
-Vue.use(request);
 
 const messages = {
     en: Object.assign(en, iViewEn),
@@ -41,7 +49,7 @@ const i18n = new VueI18n({
     locale: 'zh',  // set locale
     messages  // set locale messages
 });
-
+iView.i18n((key, value) => i18n.t(key, value))
 new Vue({
     i18n,
     render: h => h(App),

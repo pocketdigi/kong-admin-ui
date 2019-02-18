@@ -19,4 +19,18 @@ export default {
             versionNotSupport:'Version {version} is not support,We only support 0.14.0 and higher',
         }
     },
+    breadcrumb:{
+        home:'Home',
+        info:'Kong info',
+        service_list:'Service List',
+        route_list:'Route List',
+        upstream_list:'Route List',
+        consumer_list:'Consumer List',
+        plugin_list:'Plugin List',
+
+    },
+    basicInfo:{
+        configuration:'Configuration',
+        status:'Status'
+    }
 }
