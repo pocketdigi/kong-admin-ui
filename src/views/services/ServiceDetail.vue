@@ -1,17 +1,17 @@
 <template>
     <div id="content">
         <Breadcrumb>
-            <BreadcrumbItem to="/">Home</BreadcrumbItem>
+            <BreadcrumbItem to="/">{{$t('breadcrumb.home')}}</BreadcrumbItem>
             <BreadcrumbItem to="/services">Service</BreadcrumbItem>
-            <BreadcrumbItem>Service Detail</BreadcrumbItem>
+            <BreadcrumbItem>{{$t('breadcrumb.service_detail')}}</BreadcrumbItem>
         </Breadcrumb>
 
         <div id="service-info">
 
             <Row>
-                <Col span="12"><h1>Service Info:</h1></Col>
+                <Col span="12"><h1>{{$t('service.serviceInfo')}}:</h1></Col>
                 <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
-                    <Button type="primary" size="small" @click="editService">Edit</Button>
+                    <Button type="primary" size="small" @click="editService">{{$t('common.edit')}}</Button>
                 </Col>
             </Row>
             <Card>
@@ -38,9 +38,9 @@
         <Divider/>
         <div id="route-info">
             <Row>
-                <Col span="12"><h1>Route Info:</h1></Col>
+                <Col span="12"><h1>{{$t('service.routeInfo')}}:</h1></Col>
                 <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
-                    <Button type="primary" size="small" @click="addRoute">Add</Button>
+                    <Button type="primary" size="small" @click="addRoute">{{$t('common.add')}}</Button>
                 </Col>
             </Row>
             <div>
@@ -50,13 +50,14 @@
         <Divider/>
         <div id="upstream-info">
             <Row>
-                <Col span="12"><h1>Service's Upstream:</h1></Col>
+                <Col span="12"><h1>{{$t('service.service_upstream')}}</h1></Col>
                 <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
-                    <Button type="primary" size="small" @click="editUpstream()">Edit</Button>
+                    <Button type="primary" size="small" @click="editUpstream()">{{$t('common.edit')}}</Button>
                 </Col>
             </Row>
             <Card>
-                <div v-if="!upstreamExisted">Upstream `{{service.host}}` is not existed,if it's not a external host,You must <a @click="addUpstream(service.host)">add a Upstream named `{{service.host}}`</a></div>
+                <!--<div v-if="!upstreamExisted">Upstream `{{service.host}}` is not existed,if it's not a external host,You must <a @click="addUpstream(service.host)">add a Upstream named `{{service.host}}`</a></div>-->
+                <div v-if="!upstreamExisted">{{$t('service.upstreamNotExisted',{host:service.host})}} <Button type="primary" size="small" @click="addUpstream(service.host)">{{$t('common.add')}}</Button></div>
                 <div v-else>
                     <Row>
                         <Col span="9"><span>id:</span> {{ upstream.id }}</Col>
@@ -82,7 +83,7 @@
                     <Row>
                         <Col span="12"><h3>Targets:</h3></Col>
                         <Col span="12" style="text-align:right;position: absolute;top: 30%;right: 0px">
-                            <Button type="primary" size="small" @click="addTarget">Add Target</Button>
+                            <Button type="primary" size="small" @click="addTarget">{{$t('common.addTarget')}}</Button>
                         </Col>
                     </Row>
                     <TargetTable style="margin-top: 10px" v-bind:upstreamId="upstream.id"

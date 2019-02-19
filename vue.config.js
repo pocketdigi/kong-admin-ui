@@ -1,3 +1,3 @@
 module.exports = {
-    baseUrl: process.env.NODE_ENV === 'production'? '/kong-admin-ui/' : '/'
+    publicPath: process.env.NODE_ENV === 'production'? '/kong-admin-ui/' : '/'
 }

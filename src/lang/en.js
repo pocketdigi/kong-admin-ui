@@ -19,10 +19,20 @@ export default {
             versionNotSupport:'Version {version} is not support,We only support 0.14.0 and higher',
         }
     },
+    common: {
+        view: 'View',
+        delete: 'Delete',
+        deleteMessage: '<p>Are you sure you would like to delete<</p><p style="font-weight: bold">{id}?</p>',
+        deleted:'{type} deleted',
+        edit:'edit',
+        add:'add',
+        addTarget:'Add Target'
+    },
     breadcrumb:{
         home:'Home',
         info:'Kong info',
         service_list:'Service List',
+        service_detail: 'Service Detail',
         route_list:'Route List',
         upstream_list:'Route List',
         consumer_list:'Consumer List',
@@ -32,5 +42,12 @@ export default {
     basicInfo:{
         configuration:'Configuration',
         status:'Status'
+    },
+    service: {
+        addService: 'Add Service',
+        serviceInfo:'Service Info',
+        routeInfo:'Route Info',
+        service_upstream:'Service\'s Upstream',
+        upstreamNotExisted:'Upstream `{host}` is not existed,if it\'s not a external host,You must add a Upstream named `{host}`'
     }
 }

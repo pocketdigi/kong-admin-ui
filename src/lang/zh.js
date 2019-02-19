@@ -23,12 +23,16 @@ export default {
         view: '查看',
         delete: '删除',
         deleteMessage: '<p>是否删除</p><p style="font-weight: bold">{id}?</p>',
-        deleted:'{type} 已删除'
+        deleted:'{type} 已删除',
+        edit:'编辑',
+        add:'添加',
+        addTarget:'添加Target'
     },
     breadcrumb: {
         home: '首页',
         info: '基本信息',
         service_list: 'Service列表',
+        service_detail: 'Service详情',
         route_list: 'Route列表',
         upstream_list: 'Route列表',
         consumer_list: 'Consumer列表',
@@ -41,5 +45,9 @@ export default {
     },
     service: {
         addService: '添加Service',
+        serviceInfo:'Service信息',
+        routeInfo:'Route信息',
+        service_upstream:'Service的Upstream',
+        upstreamNotExisted:'名为`{host}`的upstream不存在，如果不是外部host,您需要添加一个叫{host}的Upstream'
     }
 }
