@@ -6,13 +6,13 @@
                     <strong>{{ row.name }}</strong>
                 </template>
                 <template slot-scope="{ row }" slot="action">
-                    <Button type="error" size="small" @click="deleteDialog(row.id)">Delete</Button>
+                    <Button type="error" size="small" @click="deleteDialog(row.id)">{{$t('common.delete')}}</Button>
                 </template>
             </Table>
         </div>
 
         <Modal
-                title="Add Target"
+                v-bind:title="$t('target.addTarget')"
                 v-model="addTargetModal"
                 @on-ok="addTarget(upstreamId)"
                 @on-cancel="cancelAddModalDialog()"
@@ -22,7 +22,7 @@
                     <Input v-bind:value="upstreamId" disabled></Input>
                 </FormItem>
                 <FormItem label="target:" prop="target">
-                    <Input v-model="target.target" placeholder="enter target,default port is 8000"></Input>
+                    <Input v-model="target.target" v-bind:placeholder="$t('target.targetHint')"></Input>
                 </FormItem>
                 <FormItem label="weight:">
                     <InputNumber :min="1" v-model="target.weight"></InputNumber>
@@ -105,7 +105,7 @@
                         }
                     },
                     {
-                        title: 'Action',
+                        title: this.$t('common.action'),
                         slot: 'action',
                         width: 150,
                         align: 'center'
@@ -119,10 +119,10 @@
                 },
                 ruleAddTarget: {
                     target: [
-                        {required: true, message: 'Please fill target', trigger: 'blur'}
+                        {required: true, message: this.$t('target.targetNotice'), trigger: 'blur'}
                     ],
                     weight: [
-                        {required: true, message: 'Please fill weight', trigger: 'blur'}
+                        {required: true, message: this.$t('target.weightNotice'), trigger: 'blur'}
                     ]
                 }
             }
@@ -154,8 +154,8 @@
             deleteDialog(targetId) {
                 let _this=this;
                 this.$Modal.confirm({
-                    title: 'Delete Target',
-                    content: '<p>Are you sure you would like to delete</p>' + '<p style="font-weight: bold">' + targetId + '</p>',
+                    title: _this.$t('target.deleteTarget'),
+                    content: _this.$t('common.deleteMessage',{id:targetId}),
                     onOk: () => {
                         _this._delete('/upstreams/' + this.upstreamId + '/targets/' + targetId,()=> {
                             _this.$Message.info('Target deleted!');

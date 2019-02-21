@@ -97,7 +97,7 @@
             <Row>
                 <Col span="12"><h1>Plugins:</h1></Col>
                 <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
-                    <Button type="primary" size="small" @click="addPlugin()">Add plugin</Button>
+                    <Button type="primary" size="small" @click="addPlugin()">{{$t('breadcrumb.addPlugin')}}</Button>
                 </Col>
             </Row>
             <PluginTable v-bind:plugins="plugins"></PluginTable>

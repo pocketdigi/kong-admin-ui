@@ -7,7 +7,7 @@
         <Row>
             <Col span="12"> <h1>{{$t('breadcrumb.service_list')}}:</h1></Col>
             <Col span="12" style="text-align:right;position: absolute;top: 30%;right: 0px">
-                <Button type="primary" size="small" @click="addService">{{$t('service.addService')}}</Button>
+                <Button type="primary" size="small" @click="addService">{{$t('breadcrumb.addService')}}</Button>
             </Col>
         </Row>
         <div id="table">
@@ -82,7 +82,7 @@
                         width: 160
                     },
                     {
-                        title: 'Action',
+                        title: this.$t('common.action'),
                         slot: 'action',
                         width: 150,
                         align: 'center'

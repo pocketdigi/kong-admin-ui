@@ -24,8 +24,8 @@ export default {
         delete: 'Delete',
         deleteMessage: '<p>Are you sure you would like to delete<</p><p style="font-weight: bold">{id}?</p>',
         deleted:'{type} deleted',
-        edit:'edit',
-        add:'add',
+        edit:'Edit',
+        add:'Add',
         addTarget:'Add Target'
     },
     breadcrumb:{
@@ -37,17 +37,25 @@ export default {
         upstream_list:'Route List',
         consumer_list:'Consumer List',
         plugin_list:'Plugin List',
-
+        addPlugin:'Add Plugin',
+        addService: 'Add Service',
     },
     basicInfo:{
         configuration:'Configuration',
         status:'Status'
     },
     service: {
-        addService: 'Add Service',
+
         serviceInfo:'Service Info',
         routeInfo:'Route Info',
         service_upstream:'Service\'s Upstream',
         upstreamNotExisted:'Upstream `{host}` is not existed,if it\'s not a external host,You must add a Upstream named `{host}`'
+    },
+    target:{
+        addTarget:'Add Target',
+        targetHint:'enter target,default port is 8000',
+        targetNotice:'Please fill target',
+        weightNotice:'Please fill weight',
+        deleteTarget:'Delete Target'
     }
 }

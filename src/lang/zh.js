@@ -7,7 +7,7 @@ export default {
             enter: '进入',
             clear: '清除地址',
             notice1: '我们不会连接除了您的Kong服务器以外的其他服务器，您的配置保存在浏览器的localStorage里.',
-            notice2: '所有发送给Kong管理接口的请求都是通过你的浏览器发出的，所以确保当前网络可以无需任何验证直接访问Kong管理接口',
+            notice2: '所有发送给Kong管理接口的请求都是通过你的浏览器发出的，所以确保当前网络可以无需任何验证直接访问Kong管理接口。这个应用的目的是帮助您图形化操作kong,所以，所有Kong里的名词字段都不会翻译，请自行看文档理解。',
         },
         error: {
             urlEmpty: '请输入Kong管理接口地址',
@@ -26,7 +26,8 @@ export default {
         deleted:'{type} 已删除',
         edit:'编辑',
         add:'添加',
-        addTarget:'添加Target'
+        addTarget:'添加Target',
+        action:'操作'
     },
     breadcrumb: {
         home: '首页',
@@ -37,6 +38,8 @@ export default {
         upstream_list: 'Route列表',
         consumer_list: 'Consumer列表',
         plugin_list: 'Plugin列表',
+        addPlugin:'添加 Plugin',
+        addService: '添加Service',
 
     },
     basicInfo: {
@@ -44,10 +47,19 @@ export default {
         status: '状态'
     },
     service: {
-        addService: '添加Service',
+
         serviceInfo:'Service信息',
         routeInfo:'Route信息',
         service_upstream:'Service的Upstream',
         upstreamNotExisted:'名为`{host}`的upstream不存在，如果不是外部host,您需要添加一个叫{host}的Upstream'
+    },
+    target:{
+        addTarget:'添加Target',
+        targetHint:'输入target,默认端口是8000',
+        targetNotice:'请输入target',
+        weightNotice:'请输入weight',
+        deleteTarget:'删除Target'
+    },
+    plugin:{
     }
 }
