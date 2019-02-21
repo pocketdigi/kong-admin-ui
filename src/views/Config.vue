@@ -22,6 +22,7 @@
         <a href="https://github.com/pocketdigi/kong-admin-ui"><img
                 style="position: absolute; top: 0; left: 0; border: 0;"
                 src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub"></a>
+        <a @click="changeLanguage"  style="position: absolute; top: 20px; right: 20px; border: 0;">{{language}}</a>
     </div>
 
 </template>
@@ -120,6 +121,15 @@
             clear() {
                 localStorage.removeItem('address');
                 this.formItem.address = '';
+            },
+            changeLanguage(){
+                this.$i18n.locale==='zh'?this.$i18n.locale='en':this.$i18n.locale='zh';
+                localStorage.language=this.$i18n.locale;
+            }
+        },
+        computed:{
+            language(){
+                return this.$i18n.locale==='zh'?'English':'Chinese';
             }
         }
     }

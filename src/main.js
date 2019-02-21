@@ -46,7 +46,7 @@ const messages = {
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-    locale: 'zh',  // set locale
+    locale: localStorage.language==null?'en':localStorage.language,  // set locale
     messages  // set locale messages
 });
 iView.i18n((key, value) => i18n.t(key, value))
