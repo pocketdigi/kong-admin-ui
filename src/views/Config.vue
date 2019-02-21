@@ -33,7 +33,7 @@
     export default {
         data() {
             const validatePass = (rule, value, callback) => {
-                if (value === '') {
+                if (!value) {
                     callback(new Error(this.$t('config.error.urlEmpty')));
                 } else {
                     if (!value.startsWith('http://') && !value.startsWith('https://')) {
