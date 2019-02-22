@@ -57,5 +57,14 @@ export default {
         targetNotice:'Please fill target',
         weightNotice:'Please fill weight',
         deleteTarget:'Delete Target'
+    },
+    plugin:{
+    },
+    upstream:{
+        health:'health',
+        healthCheck:'Health check',
+        unhealthy:'unhealthy',
+        healthy:'healthy',
+        healthCheckOff:'Health check off'
     }
 }

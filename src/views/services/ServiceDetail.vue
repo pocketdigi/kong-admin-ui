@@ -73,7 +73,7 @@
 
                     <Collapse style="margin-top: 10px">
                         <Panel name="1">
-                            Health checks
+                            {{$t('upstream.healthCheck')}}
                             <p slot="content">
                             <pre>{{ upstream.healthchecks }}</pre>
                             </p>

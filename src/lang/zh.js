@@ -61,5 +61,12 @@ export default {
         deleteTarget:'删除Target'
     },
     plugin:{
+    },
+    upstream:{
+        health:'健康',
+        healthCheck:'健康检测',
+        unhealthy:'不健康',
+        healthy:'健康',
+        healthCheckOff:'健康检测未开启'
     }
 }

@@ -42,6 +42,7 @@
         props: ['upstreamId'],
 
         data() {
+            let _this=this;
             return {
                 loading: true,
                 columns: [
@@ -65,7 +66,7 @@
                         width: 100
                     },
                     {
-                        title: 'health',
+                        title: _this.$t('upstream.health'),
                         key: 'health',
                         width: 200,
                         render:function (h, params) {
@@ -77,7 +78,7 @@
                                             size:16,
                                             color:'green'
                                         }
-                                    }),h('span',params.row.health)
+                                    }),h('span',_this.$t('upstream.healthy'))
                                 ]);
                                 // return h('router-link',{props: {to:'/services/'+params.row.service.id}},params.row.service.id);
                             }else if (params.row.health === 'HEALTHCHECKS_OFF') {
@@ -88,7 +89,7 @@
                                             size:16,
                                             color:'#db5f0c'
                                         }
-                                    }),h('span',params.row.health)
+                                    }),h('span',_this.$t('upstream.healthCheckOff'))
                                 ]);
                             }else{
                                 return h('div',[
@@ -98,7 +99,7 @@
                                             size:16,
                                             color:'red'
                                         }
-                                    }),h('span',params.row.health)
+                                    }),h('span',_this.$t('upstream.unhealthy'))
                                 ]);
                             }
 
