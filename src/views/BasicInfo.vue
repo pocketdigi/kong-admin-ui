@@ -72,6 +72,9 @@
                     _this.status = response.data;
                 });
             }
+        },
+        destroyed() {
+            clearInterval(this.timer);
         }
     }
 </script>

@@ -49,7 +49,17 @@ export default {
         serviceInfo:'Service Info',
         routeInfo:'Route Info',
         service_upstream:'Service\'s Upstream',
-        upstreamNotExisted:'Upstream `{host}` is not existed,if it\'s not a external host,You must add a Upstream named `{host}`'
+        upstreamNotExisted:'Upstream `{host}` is not existed,if it\'s not a external host,You must add a Upstream named `{host}`',
+        fieldServiceName:'The Service name',
+        fieldRetries:'The number of retries to execute upon failure to proxy.',
+        fieldProtocol:'The protocol used to communicate with the upstream. It can be one of http or https.',
+        fieldHost:'The host of the upstream server.',
+        fieldPort:'The upstream server port.',
+        fieldPath:'The path to be used in requests to the upstream server.',
+        fieldConnectTimeout:'The timeout in milliseconds for establishing a connection to the upstream server. ',
+        fieldWriteTimeout:'The timeout in milliseconds between two successive write operations for transmitting a request to the upstream server.',
+        fieldReadTimeout:'The timeout in milliseconds between two successive read operations for transmitting a request to the upstream server. ',
+        fieldUrl:'Shorthand attribute to set protocol, host, port and path at once. This attribute is write-only (the Admin API never “returns” the url). ',
     },
     target:{
         addTarget:'Add Target',

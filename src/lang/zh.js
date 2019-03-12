@@ -41,17 +41,29 @@ export default {
         addPlugin:'添加 Plugin',
         addService: '添加Service',
 
+
     },
     basicInfo: {
         configuration: '配置',
         status: '状态'
     },
     service: {
-
         serviceInfo:'Service信息',
         routeInfo:'Route信息',
         service_upstream:'Service的Upstream',
-        upstreamNotExisted:'名为`{host}`的upstream不存在，如果不是外部host,您需要添加一个叫{host}的Upstream'
+        upstreamNotExisted:'名为`{host}`的上游服务器不存在，如果不是外部host,您需要添加一个叫{host}的上游服务器',
+        fieldServiceName:'Service名称',
+        fieldRetries:'失败时重试次数.',
+        fieldProtocol:'与上游服务器通讯使用的协议，http 或 https.',
+        fieldHost:'上游服务器的主机名(外部填域名).',
+        fieldPort:'上游服务器端口.',
+        fieldPath:'请求上游服务器的路径.',
+        fieldConnectTimeout:'连接上游服务器的超时时间，单位：毫秒',
+        fieldWriteTimeout:'向上游服务器发送写操作的超时时间，单位：毫秒.',
+        fieldReadTimeout:'从上游服务器读的超时时间，单位：毫秒',
+        fieldUrl:'一次同时设置protocol, host, port 和 path. 该属性只读',
+
+
     },
     target:{
         addTarget:'添加Target',
