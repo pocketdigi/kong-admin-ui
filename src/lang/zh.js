@@ -26,8 +26,10 @@ export default {
         deleted:'{type} 已删除',
         edit:'编辑',
         add:'添加',
+        save:'保存',
         addTarget:'添加Target',
-        action:'操作'
+        action:'操作',
+
     },
     breadcrumb: {
         home: '首页',
@@ -40,7 +42,7 @@ export default {
         plugin_list: 'Plugin列表',
         addPlugin:'添加 Plugin',
         addService: '添加Service',
-
+        addRoute: '添加Route',
 
     },
     basicInfo: {
@@ -80,5 +82,18 @@ export default {
         unhealthy:'不健康',
         healthy:'健康',
         healthCheckOff:'健康检测未开启'
+    },
+    route: {
+        fieldName: 'Route名称',
+        fieldProtocols: '该Route允许的协议.',
+        fieldMethods: '该Route允许的HTTP 方法列表.使用http或https 协议时, hosts, paths, 或者 methods至少设置一个',
+        fieldHosts: '该Route允许的域名列表。使用http或https 协议时, hosts, paths, 或者 methods至少设置一个',
+        fieldPaths: '该Route允许的路径列表。 使用http或https 协议时, hosts, paths, 或者 methods至少设置一个.',
+        fieldRegexPriority: '权重。当多个Route同时使用正则表达式匹配时，用于选择哪个Route解析给定请求。当两条路path配路径并具有相同的regex_priority时，将使用最早创建的path。请注意，非正则表达式路由的优先级不同（较长的非正则表达式Route在较短的Route之前匹配）',
+        fieldStripPath: '当通过path匹配Route，向上游服务器请求时，删除匹配前缀(不带path).',
+        fieldPreserveHost: '当通过域名配置，向上游服务请求时，header是否使用该域名，若选否，使用Service的host',
+        fieldSnis: 'A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+        fieldSources: 'A list of IP sources of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+        fieldDestinations: 'A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
     }
 }

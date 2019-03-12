@@ -26,7 +26,9 @@ export default {
         deleted:'{type} deleted',
         edit:'Edit',
         add:'Add',
-        addTarget:'Add Target'
+        save:'Save',
+        addTarget:'Add Target',
+        action:'Action'
     },
     breadcrumb:{
         home:'Home',
@@ -39,6 +41,7 @@ export default {
         plugin_list:'Plugin List',
         addPlugin:'Add Plugin',
         addService: 'Add Service',
+        addRoute: 'Add Route',
     },
     basicInfo:{
         configuration:'Configuration',
@@ -76,5 +79,18 @@ export default {
         unhealthy:'unhealthy',
         healthy:'healthy',
         healthCheckOff:'Health check off'
+    },
+    route: {
+        fieldName: 'The name of the Route.',
+        fieldProtocols: 'A list of the protocols this Route should allow. When set to ["https"], HTTP requests are answered with a request to upgrade to HTTPS.',
+        fieldMethods: 'A list of HTTP methods that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set.',
+        fieldHosts: 'A list of domain names that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set.',
+        fieldPaths: 'A list of paths that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set.',
+        fieldRegexPriority: 'A number used to choose which route resolves a given request when several routes match it using regexes simultaneously. When two routes match the path and have the same regex_priority, the older one (lowest created_at) is used. Note that the priority for non-regex routes is different (longer non-regex routes are matched before shorter ones).',
+        fieldStripPath: 'When matching a Route via one of the paths, strip the matching prefix from the upstream request URL.',
+        fieldPreserveHost: 'When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. If set to false, the upstream Host header will be that of the Service’s host.',
+        fieldSnis: 'A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+        fieldSources: 'A list of IP sources of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+        fieldDestinations: 'A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
     }
 }
