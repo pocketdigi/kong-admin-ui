@@ -8,6 +8,7 @@ export default {
             clear:'Clear address',
             notice1:'This app will not connect other servers except your kong admin api.Your kong admin api address is save in browser\'s localstorage, so it\'s safety to manage your kong.',
             notice2:'All requests to Kong admin api is send by your browser,so make sure your device can access Kong admin api without any security auth.',
+            custom_header:'Custom headers(json)'
         },
         error:{
             urlEmpty:'Please enter your Kong admin api url',
@@ -17,6 +18,7 @@ export default {
             connectFail:'Failed to connect with your kong admin api,please check the address you input,or your computer has no permission to visit the admin api',
             urlInvalid:'Kong admin api url error',
             versionNotSupport:'Version {version} is not support,We only support 0.14.0 and higher',
+            header_format:'Header format error,must be json'
         }
     },
     common: {

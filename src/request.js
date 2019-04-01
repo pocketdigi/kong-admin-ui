@@ -8,8 +8,9 @@ export default {
                 return;
             }
             let address=localStorage.address;
+
             axios
-                .post(address + path, data)
+                .post(address + path, data,getConfig())
                 .then(response => {
                     callback(response);
                 })
@@ -25,7 +26,7 @@ export default {
             }
             let address=localStorage.address;
             axios
-                .get(address + path)
+                .get(address + path,getConfig())
                 .then(response => {
                     callback(response);
                 })
@@ -85,9 +86,19 @@ export default {
             if(error.response&&error.response.status!==404) {
                 _this.$Message.error({content: error.response.data.message, duration: 5});
             }else{
+                console.log(error);
                 _this.$Message.error({content: 'Failed to connect with your kong admin api,please check the address you input,or your computer has no permission to visit the admin api', duration: 10});
                 _this.$router.push('/config');
             }
+        }
+
+        function getConfig() {
+            let config={};
+            if(localStorage.headers) {
+                config.headers=JSON.parse(localStorage.headers);
+            }
+            console.log(config);
+            return config;
         }
     }
 }

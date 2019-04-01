@@ -8,11 +8,14 @@
                     <FormItem label="Kong Admin Api url:" prop="address">
                         <Input v-model="formItem.address" placeholder="http://192.168.0.200:8001"></Input>
                     </FormItem>
+                    <FormItem label="Custom Headers:" prop="headers">
+                        <Input v-model="formItem.headers" placeholder='{"Authorization":"Basic YWRtaW46YWRtaW4="}'></Input>
+                    </FormItem>
                 </Form>
                 <Button type="primary" @click="test">{{$t('config.button.enter')}}</Button>&nbsp;
                 <Button type="success" @click="clear">{{$t('config.button.clear')}}</Button>
             </Col>
-            <Col span="6">&nbsp;</Col>~
+            <Col span="6">&nbsp;</Col>
         </Row>
         <div class="notice">
             <p>{{$t('config.button.notice1')}}</p>
@@ -48,23 +51,44 @@
                     callback();
                 }
             };
+            const headerValidator = (rule,value,callback) => {
+                if(!value) {
+                    callback();
+                } else {
+                    try{
+                        let headerMap=JSON.parse(value);
+                        console.log(headerMap);
+                        callback();
+                    }catch (e) {
+                        callback(new Error(this.$t('config.error.header_format')));
+                    }
+                }
+
+            };
             return {
                 formItem: {
                     address: '',
+                    headers:''
                 },
                 ruleCustom: {
                     address: [
                         {validator: validatePass, trigger: 'blur'}
+                    ],
+                    headers:[
+                        {validator: headerValidator, trigger: 'blur'}
                     ]
                 }
             }
         },
         mounted() {
             this.formItem.address = localStorage.address;
+            this.formItem.headers = localStorage.headers;
         },
         methods: {
             saveConfig() {
+                console.log(this.formItem);
                 localStorage.address = this.formItem.address;
+                localStorage.headers= this.formItem.headers;
                 this.$router.push('/');
             },
             test() {
@@ -72,8 +96,13 @@
                 //validate address
                 this.$refs.form.validate((valid) => {
                     if (valid) {
+                        let config={};
+                        if(localStorage.headers) {
+                            config.headers=JSON.parse(this.formItem.headers);
+                        }
+                        console.log(config);
                         axios
-                            .get(this.formItem.address)
+                            .get(this.formItem.address,config)
                             .then(response => {
                                 let kongInfo = response.data;
                                 let version = kongInfo.version;
