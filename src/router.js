@@ -17,6 +17,7 @@ import AddConsumer from './views/consumers/AddConsumer'
 import AddPlugin from './views/plugins/AddPlugin'
 import PluginList from './views/plugins/PluginList'
 import CertificateList from './views/certificates/CertificateList'
+import AddCertificate from './views/certificates/AddCertificate'
 
 Vue.use(Router)
 
@@ -125,6 +126,14 @@ export default new Router({
                 {
                     path:'certificates',
                     component:CertificateList
+                },
+                {
+                    path:'certificates/add',
+                    component:AddCertificate
+                },
+                {
+                    path:'certificates/edit/:certificateId',
+                    component:AddCertificate
                 },
                 {
                     path:'',

@@ -28,7 +28,9 @@ export default {
         add:'Add',
         save:'Save',
         addTarget:'Add Target',
-        action:'Action'
+        action:'Action',
+        split_by_comma:'Split by comma'
+
     },
     breadcrumb:{
         home:'Home',
@@ -94,5 +96,11 @@ export default {
         fieldSnis: 'A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
         fieldSources: 'A list of IP sources of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
         fieldDestinations: 'A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+    },
+    certificate: {
+        cert: 'PEM-encoded public certificate of the SSL key pair.',
+        key:'PEM-encoded private key of the SSL key pair.',
+        tags:'An optional set of strings associated with the Certificate, for grouping and filtering.',
+        snis:'An array of zero or more hostnames to associate with this certificate as SNIs. This is a sugar parameter that will, under the hood, create an SNI object and associate it with this certificate for your convenience.'
     }
 }

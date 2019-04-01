@@ -29,7 +29,7 @@ export default {
         save:'保存',
         addTarget:'添加Target',
         action:'操作',
-
+        split_by_comma:'逗号隔开'
     },
     breadcrumb: {
         home: '首页',
@@ -96,5 +96,11 @@ export default {
         fieldSnis: 'A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
         fieldSources: 'A list of IP sources of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
         fieldDestinations: 'A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+    },
+    certificate: {
+        cert: 'PEM编码的SSL证书公钥.一般以.crt为后缀，复制里面的内容。',
+        key:'PEM编码的SSL证书私钥.一般以.key为后缀，复制里面的内容。',
+        tags:'用于分组和过滤，多个逗号隔开',
+        snis:'证书的域名，多个逗号隔开'
     }
 }
