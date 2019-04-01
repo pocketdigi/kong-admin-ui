@@ -72,7 +72,7 @@
         },
 
         mounted() {
-            EventBus.$emit('changePage',{activeName:'certificate-list',openNames:['certificates']});
+            EventBus.$emit('changePage',{activeName:'certificate-list',openNames:['certificate']});
             this.loadCertificates();
 
         },

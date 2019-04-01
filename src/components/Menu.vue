@@ -59,7 +59,7 @@
                 </Submenu>
                 <Submenu name="certificate">
                     <template slot="title">
-                        <Icon type="ios-glasses"/>
+                        <Icon type="ios-key"/>
                         Certificate
                     </template>
                     <router-link to="/certificates">
