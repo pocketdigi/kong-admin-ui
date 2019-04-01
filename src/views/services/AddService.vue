@@ -116,16 +116,16 @@
                 let _this = this;
                 let formData = JSON.parse(JSON.stringify(this.formItem));
                 if (formData.name==='') {
-                    formData.name=null;
+                    delete formData.name;
                 }
                 if (formData.host==='') {
-                    formData.host=null;
+                    delete formData.host;
                 }
                 if (formData.path==='') {
-                    formData.path=null;
+                    delete formData.path;
                 }
                 if (formData.url==='') {
-                    formData.url=null;
+                    delete formData.url;
                 }
                 if(!this.edit){
                     this._post('/services/',formData,()=>{
