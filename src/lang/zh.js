@@ -43,7 +43,8 @@ export default {
         addPlugin:'添加 Plugin',
         addService: '添加Service',
         addRoute: '添加Route',
-
+        certificate_list: '证书列表',
+        add_certificate: '添加证书',
     },
     basicInfo: {
         configuration: '配置',

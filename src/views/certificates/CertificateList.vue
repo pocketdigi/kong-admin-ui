@@ -2,18 +2,17 @@
     <div id="content">
         <Breadcrumb>
             <BreadcrumbItem to="/">Home</BreadcrumbItem>
-            <BreadcrumbItem to="/upstream">Upstream</BreadcrumbItem>
+            <BreadcrumbItem to="/certificate">Certificate</BreadcrumbItem>
         </Breadcrumb>
         <Row>
-            <Col span="12"> <h1>Upstream List:</h1></Col>
+            <Col span="12"> <h1>{{$t('breadcrumb.certificate_list')}}:</h1></Col>
             <Col span="12" style="text-align:right;position: absolute;top: 30%;right: 0px">
-                <Button type="primary" size="small" @click="addUpstream">Add Upstream</Button>
+                <Button type="primary" size="small" @click="addCertificate">{{$t('breadcrumb.add_certificate')}}</Button>
             </Col>
         </Row>
-        <!--<UpstreamTable v-bind:upstreams="upstreams"></UpstreamTable>-->
 
         <div id="table">
-            <Table border :columns="columns" :data="upstreams" :loading="loading">
+            <Table border :columns="columns" :data="certificates" :loading="loading">
                 <template slot-scope="{ row }" slot="name">
                     <strong>{{ row.name }}</strong>
                 </template>
@@ -40,36 +39,25 @@
     import moment from 'moment'
     import EventBus from '@/event-bus'
     export default {
-        name: "UpstreamList",
+        name: "CertificateList",
         data (){
             return {
-                upstreams:[],
+                certificates:[],
                 loading: true,
                 columns: [
                     {
                         title: 'id',
-                        key: 'id'
+                        key: 'id',
+                        width:300
                     },
                     {
-                        title: 'name',
-                        key: 'name',
-                        width:100
+                        title: 'snis',
+                        key: 'snis',
                     },
                     {
                         title: 'created_at',
                         key: 'createAtStr',
                         width:160
-                    },
-                    {
-                        title: 'hash_on',
-                        key: 'hash_on',
-                        width:140
-                    },
-                    {
-                        title: 'hash_on_cookie_path',
-                        key: 'hash_on_cookie_path',
-                        width:140
-
                     },
                     {
                         title: 'Action',
@@ -84,51 +72,48 @@
         },
 
         mounted() {
-            EventBus.$emit('changePage',{activeName:'upstream-list',openNames:['upstream']});
-            this.loadUpstreams();
-
+            EventBus.$emit('changePage',{activeName:'certificate-list',openNames:['certificates']});
+            this.loadCertificates();
 
         },
         methods: {
-            addUpstream() {
-                this.$router.push({path:`/upstreams/add`})
+            addCertificate() {
+                this.$router.push({path:`/certificates/add`})
             },
-            loadUpstreams(offset) {
+            loadCertificates(offset) {
                 let url;
                 if (offset) {
-                    url = '/upstreams?offset=' + offset + '&size=10';
+                    url = '/certificates?offset=' + offset + '&size=10';
                 } else {
-                    url = '/upstreams?size=10';
+                    url = '/certificates?size=10';
                     this.offsetStack=[];
                     this.offset='';
                 }
                 this.loading = true;
                 this._get(url,response => {
-                    this.upstreams=response.data.data;
+                    this.certificates=response.data.data;
 
-                    this.upstreams.map(function (upstream) {
-                        let createDate=moment.unix(upstream.created_at)
-                        upstream.createAtStr=createDate.format('YYYY-MM-DD HH:mm:ss');
-                        let updatedDate=moment.unix(upstream.updated_at)
-                        upstream.updatedAtStr=updatedDate.format('YYYY-MM-DD HH:mm:ss');
+                    this.certificates.map(function (certificate) {
+                        let createDate=moment.unix(certificate.created_at)
+                        certificate.createAtStr=createDate.format('YYYY-MM-DD HH:mm:ss');
                     });
                     this.offset=response.data.offset;
                     this.loading = false;
                 });
                 this.loading = false;
             },
-            edit (upstreamId) {
-                this.$router.push('/upstreams/edit/'+upstreamId);
+            edit (certificateId) {
+                this.$router.push('/certificates/edit/'+certificateId);
             },
-            deleteDialog(upstreamId) {
+            deleteDialog(certificateId) {
                 let _this=this;
                 this.$Modal.confirm({
                     title: this.$t('common.delete'),
-                    content: _this.$t('common.deleteMessage',{id:upstreamId}),
+                    content: _this.$t('common.deleteMessage',{id:certificateId}),
                     onOk: () => {
-                        _this._delete('/upstreams/' + upstreamId,() =>{
-                            this.$Message.info(this.$t('common.deleted',{type:'Upstream'}));
-                            this.loadUpstreams();
+                        _this._delete('/certificates/' + certificateId,() =>{
+                            this.$Message.info(this.$t('common.deleted',{type:'Certificate'}));
+                            this.loadCertificates();
                         });
                     },
                     onCancel: () => {
@@ -137,13 +122,13 @@
             },
             next() {
                 let offset=this.offset;
-                this.loadUpstreams(this.offset);
+                this.loadCertificates(this.offset);
                 this.offsetStack.push(offset);
             },
             previous() {
                 this.offsetStack.pop();
                 let offset=this.offsetStack[this.offsetStack.length-1];
-                this.loadUpstreams(offset);
+                this.loadCertificates(offset);
             }
         }
     }

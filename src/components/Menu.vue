@@ -57,6 +57,16 @@
                     </router-link>
 
                 </Submenu>
+                <Submenu name="certificate">
+                    <template slot="title">
+                        <Icon type="ios-glasses"/>
+                        Certificate
+                    </template>
+                    <router-link to="/certificates">
+                        <MenuItem name="certificate-list">{{$t('breadcrumb.certificate_list')}}</MenuItem>
+                    </router-link>
+
+                </Submenu>
             </Menu>
         </Col>
     </Row>

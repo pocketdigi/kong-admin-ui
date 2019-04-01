@@ -42,6 +42,8 @@ export default {
         addPlugin:'Add Plugin',
         addService: 'Add Service',
         addRoute: 'Add Route',
+        certificate_list: 'Certificate List',
+        add_certificate: 'Add Certificate',
     },
     basicInfo:{
         configuration:'Configuration',
