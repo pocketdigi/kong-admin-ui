@@ -18,7 +18,8 @@ export default {
             connectFail:'Failed to connect with your kong admin api,please check the address you input,or your computer has no permission to visit the admin api',
             urlInvalid:'Kong admin api url error',
             versionNotSupport:'Version {version} is not support,We only support 0.14.0 and higher',
-            header_format:'Header format error,must be json'
+            header_format:'Header format error,must be json',
+            connect_fail:'Failed to connect with your kong admin api,please check the address you input,or your computer has no permission to visit the admin api'
         }
     },
     common: {
@@ -40,7 +41,7 @@ export default {
         service_list:'Service List',
         service_detail: 'Service Detail',
         route_list:'Route List',
-        upstream_list:'Route List',
+        upstream_list:'Upstream List',
         consumer_list:'Consumer List',
         plugin_list:'Plugin List',
         addPlugin:'Add Plugin',

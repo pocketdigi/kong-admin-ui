@@ -97,7 +97,7 @@
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         let config={};
-                        if(localStorage.headers) {
+                        if(this.formItem.headers) {
                             config.headers=JSON.parse(this.formItem.headers);
                         }
                         console.log(config);

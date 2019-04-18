@@ -19,8 +19,11 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 * Consumer management
 * Plugin management
 * Authentication management(Support Basic Authentication, HMAC Authentication, JWT, Key Authentication, OAuth 2.0 Authentication)
+* Certificate management
 
 **Only support kong 0.14.x and above.**
+
+From version 0.3,we support custom headers,so you can use Basic Authentication plugin and Cors plugin on your Kong Admin Service,and add credential on header. 
 
 ### Screenshots
 

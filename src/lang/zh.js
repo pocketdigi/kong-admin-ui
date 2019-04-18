@@ -17,7 +17,9 @@ export default {
             connectFail: '连接管理接口失败，请检测您输入的地址，或者您的网络没有权限访问管理接口',
             urlInvalid: 'Kong管理接口地址错误',
             versionNotSupport: '不支持 {version} 版本,我们只支持 0.14.0或更高版本',
-            header_format:'header 格式错误，必须是json'
+            header_format:'header 格式错误，必须是json',
+            connect_fail:'连接到Kong admin 接口失败，请检查您的输入，确保当前设备有权限访问接口'
+
         }
     },
     common: {
@@ -38,7 +40,7 @@ export default {
         service_list: 'Service列表',
         service_detail: 'Service详情',
         route_list: 'Route列表',
-        upstream_list: 'Route列表',
+        upstream_list: 'Upstream列表',
         consumer_list: 'Consumer列表',
         plugin_list: 'Plugin列表',
         addPlugin:'添加 Plugin',
