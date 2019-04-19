@@ -13,6 +13,7 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 [demo on pocketdigi.com](http://kong-admin.pocketdigi.com) `http` protocol,the server is in China.
 
 
+
 ### Features
 * Basic Info (configurations and status)
 * Service management
@@ -26,6 +27,15 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 **Only support kong 0.14.x and above.**
 
 From version 0.3, we support custom headers,so you can use Basic Authentication plugin and Cors plugin on your Kong Admin Service,and add credential on header. 
+
+
+### How to use
+1. If your computer can visit kong admin api and intenet, you can use the demo we deployed.
+2. Clone the source code,compile,deploy with nginx
+3. Download the zip we packed，deploy with nginx
+4. Deploy with docker 
+
+    ``` docker run -d --name kong-admin-ui -p 8899:80 pocketdigi/kong-admin-ui:0.3 ```
 
 ### Screenshots
 
