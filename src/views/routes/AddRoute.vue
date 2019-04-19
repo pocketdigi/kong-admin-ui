@@ -1,16 +1,16 @@
 <template>
     <div>
         <Breadcrumb>
-            <BreadcrumbItem to="/">Home</BreadcrumbItem>
+            <BreadcrumbItem to="/">{{$t('breadcrumb.home')}}</BreadcrumbItem>
             <BreadcrumbItem to="/route">Route</BreadcrumbItem>
-            <BreadcrumbItem v-if="!edit">Add Route</BreadcrumbItem>
+            <BreadcrumbItem v-if="!edit">{{$t('breadcrumb.addRoute')}}</BreadcrumbItem>
             <BreadcrumbItem v-else>{{routeId}}</BreadcrumbItem>
         </Breadcrumb>
 
         <Form :model="formItem" :label-width="120" style="margin-top: 20px">
             <FormItem label="name:">
                 <Input v-model="formItem.name" placeholder="Enter Route name ..." class="text_input"></Input>
-                <span class="field_desc">The name of the Route.</span>
+                <span class="field_desc">{{$t('route.fieldName')}}</span>
             </FormItem>
 
             <FormItem label="protocols:">
@@ -20,7 +20,7 @@
                     <Checkbox label="tcp"></Checkbox>
                     <Checkbox label="tls"></Checkbox>
                 </CheckboxGroup>
-                <span class="field_desc">A list of the protocols this Route should allow. When set to ["https"], HTTP requests are answered with a request to upgrade to HTTPS. Defaults to ["http", "https"].</span>
+                <span class="field_desc">{{$t('route.fieldProtocols')}}</span>
             </FormItem>
 
             <FormItem label="methods:">
@@ -33,28 +33,24 @@
                     <Checkbox label="HEAD"></Checkbox>
                     <Checkbox label="OPTIONS"></Checkbox>
                 </CheckboxGroup>
-                <span class="field_desc">A list of HTTP methods that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set.</span>
+                <span class="field_desc">{{$t('route.fieldMethods')}}</span>
             </FormItem>
 
             <FormItem label="hosts:">
                 <Input v-model="hosts" placeholder="Use commas to separate multiple hosts"
                        class="text_input_multiple"></Input>
-                <span class="field_desc">A list of domain names that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set. </span>
+                <span class="field_desc">{{$t('route.fieldHosts')}} </span>
             </FormItem>
 
             <FormItem label="paths:">
                 <Input v-model="paths" placeholder="Use commas to separate multiple paths"
                        class="text_input_multiple"></Input>
-                <span class="field_desc">A list of paths that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set. </span>
+                <span class="field_desc">{{$t('route.fieldPaths')}} </span>
             </FormItem>
 
             <FormItem label="regex_priority:">
                 <InputNumber v-model="formItem.regex_priority"></InputNumber>
-                <div class="field_desc">A number used to choose which route resolves a given request when several routes
-                    match it using regexes simultaneously. When two routes match the path and have the same
-                    regex_priority, the older one (lowest created_at) is used. Note that the priority for non-regex
-                    routes is different (longer non-regex routes are matched before shorter ones). Defaults to 0.
-                </div>
+                <div class="field_desc">{{$t('route.fieldRegexPriority')}}</div>
             </FormItem>
 
             <!--<FormItem label="strip_path">-->
@@ -68,7 +64,7 @@
                     <span slot="open">true</span>
                     <span slot="close">false</span>
                 </i-switch>
-                <span class="field_desc">When matching a Route via one of the paths, strip the matching prefix from the upstream request URL.</span>
+                <span class="field_desc">{{$t('route.fieldStripPath')}}</span>
 
             </FormItem>
 
@@ -77,25 +73,25 @@
                     <span slot="open">true</span>
                     <span slot="close">false</span>
                 </i-switch>
-                <span class="field_desc">When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. If set to false, the upstream Host header will be that of the Service’s host.</span>
+                <span class="field_desc">{{$t('route.fieldPreserveHost')}}</span>
             </FormItem>
 
 
             <FormItem label="snis:">
                 <Input v-model="snis" placeholder="Use commas to separate multiple snis"
                        class="text_input_multiple"></Input>
-                <span class="field_desc">A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set. </span>
+                <span class="field_desc">{{$t('route.fieldSnis')}} </span>
             </FormItem>
             <FormItem label="sources:">
                 <Input v-model="sources" placeholder="Use commas to separate multiple sources"
                        class="text_input_multiple"></Input>
-                <span class="field_desc">A list of IP sources of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set. </span>
+                <span class="field_desc">{{$t('route.fieldSources')}} </span>
             </FormItem>
 
             <FormItem label="destinations:">
                 <Input v-model="destinations" placeholder="Use commas to separate multiple sources"
                        class="text_input_multiple"></Input>
-                <span class="field_desc">A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set. </span>
+                <span class="field_desc">{{$t('route.fieldDestinations')}}</span>
             </FormItem>
 
             <FormItem label="service:">
@@ -105,7 +101,7 @@
             </FormItem>
 
             <FormItem>
-                <Button type="primary" @click="saveRoute">Save</Button>
+                <Button type="primary" @click="saveRoute">{{$t('common.save')}}</Button>
             </FormItem>
         </Form>
     </div>

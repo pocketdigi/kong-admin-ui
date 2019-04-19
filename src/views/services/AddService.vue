@@ -1,27 +1,27 @@
 <template>
     <div>
         <Breadcrumb>
-            <BreadcrumbItem to="/">Home</BreadcrumbItem>
+            <BreadcrumbItem to="/">{{$t('breadcrumb.home')}}</BreadcrumbItem>
             <BreadcrumbItem to="/services">Service</BreadcrumbItem>
-            <BreadcrumbItem v-if="!edit">Add Service</BreadcrumbItem>
+            <BreadcrumbItem v-if="!edit">{{$t('breadcrumb.addService')}}</BreadcrumbItem>
             <BreadcrumbItem v-else>{{serviceId}}</BreadcrumbItem>
         </Breadcrumb>
 
         <Form :model="formItem" :label-width="120" style="margin-top: 20px">
             <FormItem label="name:">
                 <Input v-model="formItem.name" placeholder="Enter Service name ..." class="text_input"></Input>
-                <span class="field_desc">The Service name.</span>
+                <span class="field_desc">{{$t('service.fieldServiceName')}}</span>
             </FormItem>
             <FormItem label="retries:">
                 <InputNumber :min="1" v-model="formItem.retries"></InputNumber>
-                <span class="field_desc">The number of retries to execute upon failure to proxy. Defaults to 5.</span>
+                <span class="field_desc">{{$t('service.fieldRetries')}}</span>
             </FormItem>
             <FormItem label="protocol:">
                 <RadioGroup v-model="formItem.protocol">
                     <Radio label="http">http</Radio>
                     <Radio label="https">https</Radio>
                 </RadioGroup>
-                <span class="field_desc">The protocol used to communicate with the upstream. It can be one of http or https. Defaults to "http".</span>
+                <span class="field_desc">{{$t('service.fieldProtocol')}}</span>
             </FormItem>
             <FormItem label="host:">
                 <!--<Input v-model="formItem.host" placeholder="Enter host" class="text_input"></Input>-->
@@ -31,31 +31,31 @@
                         :filter-method="filterMethod"
                         placeholder="Enter host"
                         style="width:200px"></AutoComplete>
-                <span class="field_desc">The host of the upstream server..</span>
+                <span class="field_desc">{{$t('service.fieldHost')}}</span>
             </FormItem>
             <FormItem label="port:">
                 <Input v-model="formItem.port" placeholder="Enter port" class="text_input"></Input>
-                <span class="field_desc">The upstream server port. Defaults to 80.</span>
+                <span class="field_desc">{{$t('service.fieldPort')}}</span>
             </FormItem>
             <FormItem label="path:">
                 <Input v-model="formItem.path" placeholder="Enter path" class="text_input"></Input>
-                <span class="field_desc">The path to be used in requests to the upstream server.</span>
+                <span class="field_desc">{{$t('service.fieldPath')}}</span>
             </FormItem>
             <FormItem label="connect_timeout:">
                 <InputNumber v-model="formItem.connect_timeout" class="text_input"></InputNumber>
-                <span class="field_desc">The timeout in milliseconds for establishing a connection to the upstream server. Defaults to 60000.</span>
+                <span class="field_desc">{{$t('service.fieldConnectTimeout')}}</span>
             </FormItem>
             <FormItem label="write_timeout:">
                 <InputNumber v-model="formItem.write_timeout" class="text_input"></InputNumber>
-                <span class="field_desc">The timeout in milliseconds between two successive write operations for transmitting a request to the upstream server. Defaults to 60000.</span>
+                <span class="field_desc">{{$t('service.fieldWriteTimeout')}}</span>
             </FormItem>
             <FormItem label="read_timeout:">
                 <InputNumber v-model="formItem.read_timeout" class="text_input"></InputNumber>
-                <span class="field_desc">The timeout in milliseconds between two successive read operations for transmitting a request to the upstream server. Defaults to 60000</span>
+                <span class="field_desc">{{$t('service.fieldReadTimeout')}}</span>
             </FormItem>
             <FormItem label="url:" v-if="!edit">
                 <Input v-model="formItem.url" placeholder="Enter url" style="max-width: 400px"></Input>
-                <span class="field_desc">Shorthand attribute to set protocol, host, port and path at once. This attribute is write-only (the Admin API never “returns” the url).</span>
+                <span class="field_desc">{{$t('service.fieldUrl')}}</span>
             </FormItem>
             <FormItem>
                 <Button type="primary" @click="saveService">Save</Button>
@@ -116,16 +116,16 @@
                 let _this = this;
                 let formData = JSON.parse(JSON.stringify(this.formItem));
                 if (formData.name==='') {
-                    formData.name=null;
+                    delete formData.name;
                 }
                 if (formData.host==='') {
-                    formData.host=null;
+                    delete formData.host;
                 }
                 if (formData.path==='') {
-                    formData.path=null;
+                    delete formData.path;
                 }
                 if (formData.url==='') {
-                    formData.url=null;
+                    delete formData.url;
                 }
                 if(!this.edit){
                     this._post('/services/',formData,()=>{

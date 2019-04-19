@@ -6,8 +6,8 @@
                     <strong>{{ row.name }}</strong>
                 </template>
                 <template slot-scope="{ row }" slot="action">
-                    <Button type="primary" size="small" style="margin-right: 5px" @click="edit(row.id)">View</Button>
-                    <Button type="error" size="small" @click="deleteDialog(row.id)">Delete</Button>
+                    <Button type="primary" size="small" style="margin-right: 5px" @click="edit(row.id)">{{$t('common.view')}}</Button>
+                    <Button type="error" size="small" @click="deleteDialog(row.id)">{{$t('common.delete')}}</Button>
                 </template>
             </Table>
         </div>
@@ -79,7 +79,7 @@
                         }
                     },
                     {
-                        title: 'Action',
+                        title: this.$t('common.action'),
                         slot: 'action',
                         fixed: 'right',
                         width: 150,

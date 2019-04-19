@@ -5,7 +5,7 @@
                 <router-link to="/">
                     <MenuItem name="index">
                         <Icon type="ios-stats"/>
-                        Kong Info
+                        {{$t('breadcrumb.info')}}
                     </MenuItem>
                 </router-link>
 
@@ -15,7 +15,7 @@
                         Service
                     </template>
                     <router-link to="/services">
-                        <MenuItem name="service-list">Service List</MenuItem>
+                        <MenuItem name="service-list">{{$t('breadcrumb.service_list')}}</MenuItem>
                     </router-link>
                 </Submenu>
                 <Submenu name="route">
@@ -24,7 +24,7 @@
                         Route
                     </template>
                     <router-link to="/routes">
-                        <MenuItem name="route-list">Route List</MenuItem>
+                        <MenuItem name="route-list">{{$t('breadcrumb.route_list')}}</MenuItem>
                     </router-link>
                 </Submenu>
                 <Submenu name="upstream">
@@ -33,7 +33,7 @@
                         Upstream
                     </template>
                     <router-link to="/upstreams">
-                        <MenuItem name="upstream-list">Upstream List</MenuItem>
+                        <MenuItem name="upstream-list">{{$t('breadcrumb.upstream_list')}}</MenuItem>
                     </router-link>
 
                 </Submenu>
@@ -43,7 +43,7 @@
                         Consumer
                     </template>
                     <router-link to="/consumers">
-                        <MenuItem name="consumer-list">Consumer List</MenuItem>
+                        <MenuItem name="consumer-list">{{$t('breadcrumb.consumer_list')}}</MenuItem>
                     </router-link>
 
                 </Submenu>
@@ -53,7 +53,17 @@
                         Plugin
                     </template>
                     <router-link to="/plugins">
-                        <MenuItem name="plugin-list">Plugin List</MenuItem>
+                        <MenuItem name="plugin-list">{{$t('breadcrumb.plugin_list')}}</MenuItem>
+                    </router-link>
+
+                </Submenu>
+                <Submenu name="certificate">
+                    <template slot="title">
+                        <Icon type="ios-key"/>
+                        Certificate
+                    </template>
+                    <router-link to="/certificates">
+                        <MenuItem name="certificate-list">{{$t('breadcrumb.certificate_list')}}</MenuItem>
                     </router-link>
 
                 </Submenu>

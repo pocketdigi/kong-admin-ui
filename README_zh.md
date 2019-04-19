@@ -1,33 +1,31 @@
 # Kong admin UI
 
-[中文](README_zh.md)
+Kong 网关的管理界面
 
-A Web UI for the Kong(The Cloud-Native API Gateway & Service Mesh) admin api.
-
-It's a font-end application,no need any back-end server.All requests to Kong admin api is send by user's browser.
-
-If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and your current device can visit kong admin api directly,you can use our demo to manage your Kong,it's safe. 
-
-[demo on github page](https://pocketdigi.github.io/kong-admin-ui) `https` protocol,so your kong admin api must `https` too.
-
-[demo on pocketdigi.com](http://kong-admin.pocketdigi.com) `http` protocol,the server is in China.
+纯前端应用，所有请求从浏览器发出，不经过任何中间服务器，直接到达您的Kong admin api,安全、放心。如果您的kong admin api可以互联网访问,可直接使用部署在公网的demo，否则请本地化部署。
 
 
-### Features
-* Basic Info (configurations and status)
-* Service management
-* Route management
-* Upstream management(include target)
-* Consumer management
-* Plugin management
-* Authentication management(Support Basic Authentication, HMAC Authentication, JWT, Key Authentication, OAuth 2.0 Authentication)
-* Certificate management
+[https demo](https://pocketdigi.github.io/kong-admin-ui) ,部署在github上，https协议，所以您的kong admin api也必须是https协议，否则会被浏览器拦截。
 
-**Only support kong 0.14.x and above.**
 
-From version 0.3, we support custom headers,so you can use Basic Authentication plugin and Cors plugin on your Kong Admin Service,and add credential on header. 
+[http demo](http://kong-admin.pocketdigi.com) http协议，部署在国内腾讯云，国内访问速度更快
 
-### Screenshots
+
+### 特性
+* 基本信息 (配置和状态)
+* Service 管理
+* Route 管理
+* Upstream 管理
+* Consumer 管理
+* Plugin 管理
+* 授权管理(支持 Basic Authentication, HMAC Authentication, JWT, Key Authentication, OAuth 2.0 Authentication)
+* SSL证书 管理
+
+**只支持 0.14.x 及以上版本的kong**
+
+从0.3版本开始，支持自定义header,所以，您可以使用kong转发kong admin api接口，再加上Basic Authentication插件和Cors插件，在公网上管理kong更安全
+
+### 截图
 
 
 ![basic info](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/basic_info.png)

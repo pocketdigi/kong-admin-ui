@@ -1,16 +1,16 @@
 <template>
     <div>
         <Breadcrumb>
-            <BreadcrumbItem to="/">Home</BreadcrumbItem>
+            <BreadcrumbItem to="/">{{$t('breadcrumb.home')}}</BreadcrumbItem>
         </Breadcrumb>
-        <h1>Kong Info</h1>
+        <h1>{{$t('breadcrumb.info')}}</h1>
         <Row>
             <Col span="6">hostname: {{basicInfo.hostname}}</Col>
             <Col span="6">version: {{basicInfo.version}}</Col>
-            <Col span="6">node_id: {{basicInfo.node_id}}</Col>
+            <Col span="6">node_id {{basicInfo.node_id}}</Col>
             <Col span="6">tagline: {{basicInfo.tagline}}</Col>
         </Row>
-        <h3>Configuration:</h3>
+        <h3>{{$t('basicInfo.configuration')}}:</h3>
         <Row>
             <Col span="8">prefix: {{ basicInfo.configuration.prefix }}</Col>
             <Col span="8">proxy_listen: {{basicInfo.configuration.proxy_listen}}</Col>
@@ -21,7 +21,7 @@
             <Col span="8">nginx_conf: {{basicInfo.configuration.nginx_conf}}</Col>
             <Col span="8">nginx_pid: {{basicInfo.configuration.nginx_pid}}</Col>
         </Row>
-        <h3>Status:</h3>
+        <h3>{{$t('basicInfo.status')}}:</h3>
         <Row>
             <Col span="8">server.connections_writing: {{ status.server.connections_writing }}</Col>
             <Col span="8">server.total_requests: {{ status.server.total_requests }}</Col>
@@ -72,6 +72,9 @@
                     _this.status = response.data;
                 });
             }
+        },
+        destroyed() {
+            clearInterval(this.timer);
         }
     }
 </script>
