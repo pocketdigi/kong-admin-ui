@@ -23,7 +23,7 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 
 **Only support kong 0.14.x and above.**
 
-From version 0.3,we support custom headers,so you can use Basic Authentication plugin and Cors plugin on your Kong Admin Service,and add credential on header. 
+From version 0.3, we support custom headers,so you can use Basic Authentication plugin and Cors plugin on your Kong Admin Service,and add credential on header. 
 
 ### Screenshots
 
@@ -45,6 +45,8 @@ From version 0.3,we support custom headers,so you can use Basic Authentication p
 ![consumer detail](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/consumer_detail.png)
 
 ![plugin list](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/plugin_list.png)
+
+![certification](https://github.com/pocketdigi/kong-admin-ui/raw/master/docs/images/certificate_add.png)
 ## Project setup
 ```
 npm install
