@@ -34,7 +34,7 @@
                 <span class="field_desc">{{$t('service.fieldHost')}}</span>
             </FormItem>
             <FormItem label="port:">
-                <Input v-model="formItem.port" placeholder="Enter port" class="text_input"></Input>
+                <Input v-model="formItem.port" placeholder="Enter port" class="text_input" number></Input>
                 <span class="field_desc">{{$t('service.fieldPort')}}</span>
             </FormItem>
             <FormItem label="path:">

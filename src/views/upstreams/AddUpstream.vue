@@ -153,7 +153,7 @@
 
 
             <FormItem label="healthchecks.passive.unhealthy.http_statuses:">
-                <Input v-model="healthchecksActiveHealthyHttpStatuses" placeholder="http status" class="text_input"></Input>
+                <Input v-model="healthchecksPassiveUnHealthyHttpStatuses" placeholder="http status" class="text_input"></Input>
                 <span class="field_desc">An array of HTTP statuses which represent unhealthiness when produced by proxied traffic, as observed by passive health checks.  </span>
             </FormItem>
 
