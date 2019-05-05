@@ -269,7 +269,7 @@
                         obj = obj[name];
                     } else {
                         let value=obj[name];
-                        if(value!==undefined){
+                        if(value){
                             if(fieldType==='array'||fieldType==='set'){
                                 defaultValue=value.join(',');
                             }else{
