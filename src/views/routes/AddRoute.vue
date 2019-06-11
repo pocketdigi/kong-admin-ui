@@ -175,8 +175,8 @@
                 let _this = this;
                 this._get('/routes/' + this.routeId, response => {
                     _this.formItem = response.data;
-                    this.hosts = this.formItem.hosts.join(',');
-                    this.paths = this.formItem.paths.join(',');
+                    this.hosts = this.formItem.hosts?this.formItem.hosts.join(','):'';
+                    this.paths = this.formItem.paths?this.formItem.paths.join(','):'';
                 });
             },
             loadServices() {
@@ -196,7 +196,7 @@
                     }
                 },
                 get: function () {
-                    return this.formItem.hosts.join(',');
+                    return this.formItem.hosts?this.formItem.hosts.join(','):'';
                 }
             },
             paths: {
@@ -208,7 +208,7 @@
                     }
                 },
                 get: function () {
-                    return this.formItem.paths.join(',');
+                    return this.formItem.paths?this.formItem.paths.join(','):'';
                 }
             },
             snis: {
