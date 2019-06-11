@@ -93,8 +93,17 @@ export default {
 
         function getConfig() {
             let config={};
+            if(localStorage.headers==='null') {
+                localStorage.removeItem('headers');
+                return config;
+            }
             if(localStorage.headers) {
-                config.headers=JSON.parse(localStorage.headers);
+                try{
+                    config.headers=JSON.parse(localStorage.headers);
+                }catch (e) {
+                    localStorage.removeItem('headers');
+                }
+
             }
             return config;
         }

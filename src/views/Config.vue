@@ -88,7 +88,9 @@
             saveConfig() {
                 console.log(this.formItem);
                 localStorage.address = this.formItem.address;
-                localStorage.headers= this.formItem.headers;
+                if(localStorage.headers!==this.formItem.headers){
+                    localStorage.headers= this.formItem.headers;
+                }
                 this.$router.push('/');
             },
             test() {
