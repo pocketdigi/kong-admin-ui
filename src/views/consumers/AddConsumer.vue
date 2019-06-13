@@ -36,6 +36,7 @@
         <BasicAuthConfigTable  v-bind:consumerId="consumerId" v-if="consumerId"></BasicAuthConfigTable>
         <KeyAuthConfigTable  v-bind:consumerId="consumerId" v-if="consumerId"></KeyAuthConfigTable>
         <JWTConfigTable  v-bind:consumerId="consumerId" v-if="consumerId"></JWTConfigTable>
+        <ACLConfigTable  v-bind:consumerId="consumerId" v-if="consumerId"></ACLConfigTable>
 
 
     </div>
@@ -49,11 +50,12 @@
     import BasicAuthConfigTable from '@/components/consumers/BasicAuthConfigTable'
     import KeyAuthConfigTable from '@/components/consumers/KeyAuthConfigTable'
     import JWTConfigTable from '@/components/consumers/JWTConfigTable'
+    import ACLConfigTable from '@/components/consumers/ACLConfigTable'
     import EventBus from '@/event-bus'
 
     export default {
         name: "AddConsumer",
-        components:{PluginTable,HMACAuthConfigTable,OAuth2ConfigTable,BasicAuthConfigTable,KeyAuthConfigTable,JWTConfigTable},
+        components:{PluginTable,HMACAuthConfigTable,OAuth2ConfigTable,BasicAuthConfigTable,KeyAuthConfigTable,JWTConfigTable,ACLConfigTable},
         data() {
             return {
                 formItem: {
