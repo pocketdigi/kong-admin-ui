@@ -28,6 +28,7 @@ If you can visit our [demo](https://pocketdigi.github.io/kong-admin-ui) ,and you
 
 From version 0.3, we support custom headers,so you can use Basic Authentication plugin and Cors plugin on your Kong Admin Service,and add credential on header. 
 
+[kong admin ui Custom Headers使用说明 给你的kong加个密码](https://www.pocketdigi.com/20190613/1644.html)
 
 ### How to use
 1. If your computer can visit kong admin api and intenet, you can use the demo we deployed.

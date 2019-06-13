@@ -25,6 +25,7 @@ Kong 网关的管理界面
 
 从0.3版本开始，支持自定义header,所以，您可以使用kong转发kong admin api接口，再加上Basic Authentication插件和Cors插件，在公网上管理kong更安全
 
+[kong admin ui Custom Headers使用说明 给你的kong加个密码](https://www.pocketdigi.com/20190613/1644.html)
 
 ### 如何使用
 1. 如果您的电脑可以访问外网，使用上面部署的demo
