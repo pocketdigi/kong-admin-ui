@@ -270,8 +270,9 @@
                    return this.formItem.healthchecks.active.unhealthy.http_statuses.join(',');
                },
                 set: function (newValue) {
+
                     if(newValue) {
-                        this.formItem.healthchecks.active.unhealthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.active.unhealthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.active.unhealthy.http_statuses=[];
                     }
@@ -283,7 +284,7 @@
                 },
                 set: function (newValue) {
                     if(newValue) {
-                        this.formItem.healthchecks.active.healthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.active.healthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.active.healthy.http_statuses=[];
                     }
@@ -295,7 +296,7 @@
                 },
                 set: function (newValue) {
                     if(newValue) {
-                        this.formItem.healthchecks.passive.unhealthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.passive.unhealthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.passive.unhealthy.http_statuses=[];
                     }
@@ -307,7 +308,7 @@
                 },
                 set: function (newValue) {
                     if(newValue) {
-                        this.formItem.healthchecks.passive.healthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.passive.healthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.passive.healthy.http_statuses=[];
                     }
