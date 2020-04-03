@@ -64,6 +64,7 @@
                 let _this = this;
                 this._get('/', response => {
                     _this.basicInfo = response.data;
+                    localStorage.kongVersion=_this.basicInfo.version;
                 });
             },
             loadStatus() {

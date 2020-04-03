@@ -41,7 +41,7 @@
                 <span class="field_desc">If this plugin no need assign to a consumer,leave it blank.</span>
             </FormItem>
 
-            <FormItem label="run_on:">
+            <FormItem label="run_on:" v-if="!isKong2()">
                 <Select v-model="formItem.run_on" filterable class="text_input">
                     <Option v-for="item in runOns" :value="item" :key="item">
                         {{ item }}
@@ -57,8 +57,6 @@
                 </i-switch>
                 <span class="field_desc">Whether the plugin is applied.</span>
             </FormItem>
-
-
 
 
             <FormItem :label-width="300" v-for="field in flatFields" :label="field.fieldName+':'"
@@ -103,13 +101,12 @@
             return {
                 pluginId: '',
                 formItem: {
-                    name:'',
+                    name: '',
                     consumer: {},
                     service: {},
                     route: {},
                     config: {},
                     enabled: true,
-                    run_on: 'first',
                 },
                 enabledPlugins: [],
                 schemaFields: [],
@@ -117,12 +114,12 @@
                 consumers: [],
                 services: [],
                 routes: [],
-                runOns:['first','second','all'],
+                runOns: ['first', 'second', 'all'],
             }
         },
         watch: {
             name: function (newVal, oldVal) {
-                if(oldVal){
+                if (oldVal) {
                     this.formItem.config = {};
                 }
 
@@ -134,15 +131,15 @@
                 return this.formItem.name;
             },
             serviceId: {
-                get(){
+                get() {
                     return this.formItem.service.id;
                 },
-                set(newValue){
-                    if(newValue){
-                        this.formItem.service.id=newValue;
+                set(newValue) {
+                    if (newValue) {
+                        this.formItem.service.id = newValue;
                         this.loadRoutes();
-                    }else{
-                        this.formItem.service.id=null;
+                    } else {
+                        this.formItem.service.id = null;
                     }
                 }
 
@@ -154,7 +151,7 @@
             this.pluginId = this.$route.params.pluginId;
             if (this.pluginId) {
                 this.loadPlugin();
-            }else{
+            } else {
                 this.loadPlugins();
                 this.loadConsumers();
                 this.loadServices();
@@ -166,15 +163,15 @@
             loadPlugin() {
                 this._get('/plugins/' + this.pluginId, response => {
                     this.formItem = response.data;
-                    this.serviceId=this.formItem.service.id;
-                    if(!this.formItem.consumer) {
-                        this.formItem.consumer={};
+                    this.serviceId = this.formItem.service.id;
+                    if (!this.formItem.consumer) {
+                        this.formItem.consumer = {};
                     }
-                    if(!this.formItem.route) {
-                        this.formItem.route={};
+                    if (!this.formItem.route) {
+                        this.formItem.route = {};
                     }
-                    if(!this.formItem.service) {
-                        this.formItem.service={};
+                    if (!this.formItem.service) {
+                        this.formItem.service = {};
                     }
                     this.loadPlugins();
                     this.loadConsumers();
@@ -183,7 +180,7 @@
             },
             loadPlugins() {
                 this._get('/plugins/enabled', response => {
-                    this.enabledPlugins=response.data.enabled_plugins;
+                    this.enabledPlugins = response.data.enabled_plugins;
                 });
             },
             loadPluginSchema() {
@@ -246,7 +243,6 @@
                         let formField = this.formField(finalFieldName, field[1].type, elementType, defaultValue, field[1].values);
 
 
-
                         this.flatFields.push(formField);
 
                         this.valueChange(formField.defaultValue, formField);
@@ -259,21 +255,21 @@
 
                 let array = fieldName.split('.');
                 let obj = this.formItem.config;
-                for(let i=1;i<array.length;i++) {
+                for (let i = 1; i < array.length; i++) {
                     let name = array[i];
-                    if (i < array.length - 1){
+                    if (i < array.length - 1) {
                         //not the last one
-                        if(!obj[name]){
+                        if (!obj[name]) {
                             break;
                         }
                         obj = obj[name];
                     } else {
-                        let value=obj[name];
-                        if(value){
-                            if(fieldType==='array'||fieldType==='set'){
-                                defaultValue=value.join(',');
-                            }else{
-                                defaultValue=value;
+                        let value = obj[name];
+                        if (value) {
+                            if (fieldType === 'array' || fieldType === 'set') {
+                                defaultValue = value.join(',');
+                            } else {
+                                defaultValue = value;
                             }
                         }
                     }
@@ -296,7 +292,7 @@
             },
             loadServices() {
                 this._get('/services', response => {
-                    this.services=response.data.data;
+                    this.services = response.data.data;
                 });
             },
             loadRoutes() {
@@ -317,13 +313,13 @@
                 let fieldName = formField.fieldName;
                 let fieldType = formField.fieldType;
                 let elementType = formField.elementType;
-                if(fieldType==='array'&&elementType==='string') {
-                    val=val.split(',');
+                if (fieldType === 'array' && elementType === 'string') {
+                    val = val.split(',');
                 }
-                if(fieldType==='array'&&elementType==='number') {
-                    let tmpStrArray=val.split(',');
-                    val=[];
-                    tmpStrArray.forEach(str=>{
+                if (fieldType === 'array' && elementType === 'number') {
+                    let tmpStrArray = val.split(',');
+                    val = [];
+                    tmpStrArray.forEach(str => {
                         val.push(parseInt(str));
                     });
 
@@ -335,7 +331,7 @@
                     let name = nameArr[i];
                     if (i < nameArr.length - 1) {
                         //not the last one
-                        if(!obj[name]){
+                        if (!obj[name]) {
                             obj[name] = {};
                         }
                         obj = obj[name];
@@ -349,30 +345,34 @@
                 let _this = this;
                 let formData = JSON.parse(JSON.stringify(this.formItem));
 
-                if(!formData.service.id){
-                    formData.service=null;
+                if (!formData.service.id) {
+                    formData.service = null;
                 }
-                if(!formData.consumer.id){
-                    formData.consumer=null;
+                if (!formData.consumer.id) {
+                    formData.consumer = null;
                 }
-                if(!formData.route.id){
-                    formData.route=null;
+                if (!formData.route.id) {
+                    formData.route = null;
                 }
+                console.log(formData);
                 if (!this.pluginId) {
                     this._post('/plugins', formData, () => {
                         _this.$router.go(-1);
                     });
                 } else {
                     //edit
-                    this._patch('/plugins/'+this.pluginId, formData, () => {
+                    this._patch('/plugins/' + this.pluginId, formData, () => {
                         _this.$router.go(-1);
                     });
                 }
 
             },
             clearService() {
-                this.formItem.service.id='';
+                this.formItem.service.id = '';
                 this.$refs.service.clearSingleSelect();
+            },
+            isKong2() {
+                return localStorage.kongVersion.startsWith('2');
             }
 
         }
