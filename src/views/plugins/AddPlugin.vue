@@ -252,7 +252,6 @@
             },
 
             formField(fieldName, fieldType, elementType, defaultValue, mapValueFields) {
-
                 let array = fieldName.split('.');
                 let obj = this.formItem.config;
                 for (let i = 1; i < array.length; i++) {
@@ -314,7 +313,12 @@
                 let fieldType = formField.fieldType;
                 let elementType = formField.elementType;
                 if (fieldType === 'array' && elementType === 'string') {
-                    val = val.split(',');
+                    if(val==='') {
+                        val=[];
+                    }else{
+                        val = val.split(',');
+                    }
+
                 }
                 if (fieldType === 'array' && elementType === 'number') {
                     let tmpStrArray = val.split(',');
@@ -354,7 +358,6 @@
                 if (!formData.route.id) {
                     formData.route = null;
                 }
-                console.log(formData);
                 if (!this.pluginId) {
                     this._post('/plugins', formData, () => {
                         _this.$router.go(-1);

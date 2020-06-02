@@ -122,7 +122,7 @@
                     delete formData.host;
                 }
                 if (formData.path==='') {
-                    delete formData.path;
+                    formData.path='/';
                 }
                 if (formData.url==='') {
                     delete formData.url;
