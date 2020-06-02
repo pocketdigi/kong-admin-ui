@@ -189,6 +189,7 @@
                         this.schemaFields = response.data.fields;
                         this.flatFields = [];
                         this.unpackFields(this.schemaFields, 'config');
+
                         for (let field of this.flatFields) {
                             if (field.fieldType === 'map' || field.elementType === 'record') {
                                 this.$Message.warning('Sorry,We not support this plugin yet');
@@ -196,7 +197,6 @@
                                 break;
                             }
                         }
-
                     });
                 }
 
@@ -231,17 +231,17 @@
             unpackRecord(fields, parent) {
                 for (let i = 0; i < fields.length; i++) {
                     let field = fields[i];
-                    let fieldName = field[0];
+                    let fieldObj=Object.entries(field[1])[0];
+                    let fieldName = fieldObj[0];
                     if (isNaN(fieldName)) {
                         let elementType;
-                        let defaultValue = field[1].default;
-                        if (field[1].elements) {
-                            elementType = field[1].elements.type;
-                            defaultValue = field[1].elements.default;
+                        let defaultValue = fieldObj[1].default;
+                        if (fieldObj[1].elements) {
+                            elementType = fieldObj[1].elements.type;
+                            defaultValue = fieldObj[1].elements.default;
                         }
                         let finalFieldName = parent + '.' + fieldName;
-                        let formField = this.formField(finalFieldName, field[1].type, elementType, defaultValue, field[1].values);
-
+                        let formField = this.formField(finalFieldName, fieldObj[1].type, elementType, defaultValue, fieldObj[1].values);
 
                         this.flatFields.push(formField);
 
