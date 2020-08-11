@@ -93,6 +93,7 @@ export default {
         fieldMethods: '该Route允许的HTTP 方法列表.使用http或https 协议时, hosts, paths, 或者 methods至少设置一个',
         fieldHosts: '该Route允许的域名列表。使用http或https 协议时, hosts, paths, 或者 methods至少设置一个',
         fieldPaths: '该Route允许的路径列表。 使用http或https 协议时, hosts, paths, 或者 methods至少设置一个.',
+        fieldHeaders: '该Route允许的请求头。Host 请求头不能通过此属性设置，请使用hosts属性',
         fieldRegexPriority: '权重。当多个Route同时使用正则表达式匹配时，用于选择哪个Route解析给定请求。当两条路path配路径并具有相同的regex_priority时，将使用最早创建的path。请注意，非正则表达式路由的优先级不同（较长的非正则表达式Route在较短的Route之前匹配）',
         fieldStripPath: '当通过path匹配Route，向上游服务器请求时，删除匹配前缀(不带path).',
         fieldPreserveHost: '当通过域名配置，向上游服务请求时，header是否使用该域名，若选否，使用Service的host',

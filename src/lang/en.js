@@ -93,6 +93,7 @@ export default {
         fieldMethods: 'A list of HTTP methods that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set.',
         fieldHosts: 'A list of domain names that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set.',
         fieldPaths: 'A list of paths that match this Route. When using http or https protocols, at least one of hosts, paths, or methods must be set.',
+        fieldHeaders: 'One or more lists of values indexed by header name that will cause this Route to match if present in the request. The Host header cannot be used with this attribute: hosts should be specified using the hosts attribute.',
         fieldRegexPriority: 'A number used to choose which route resolves a given request when several routes match it using regexes simultaneously. When two routes match the path and have the same regex_priority, the older one (lowest created_at) is used. Note that the priority for non-regex routes is different (longer non-regex routes are matched before shorter ones).',
         fieldStripPath: 'When matching a Route via one of the paths, strip the matching prefix from the upstream request URL.',
         fieldPreserveHost: 'When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. If set to false, the upstream Host header will be that of the Service’s host.',

@@ -48,6 +48,12 @@
                 <span class="field_desc">{{$t('route.fieldPaths')}} </span>
             </FormItem>
 
+            <FormItem label="headers:">
+                <Input v-model="headers" placeholder=""
+                       class="text_input_multiple"></Input>
+                <span class="field_desc">{{$t('route.fieldHeaders')}} </span>
+            </FormItem>
+
             <FormItem label="regex_priority:">
                 <InputNumber v-model="formItem.regex_priority"></InputNumber>
                 <div class="field_desc">{{$t('route.fieldRegexPriority')}}</div>
@@ -173,6 +179,7 @@
                     methods: [],
                     hosts: [],
                     paths: [],
+                    headers: {},
                     regex_priority: 0,
                     strip_path: true,
                     preserve_host: false,
@@ -243,6 +250,9 @@
                     param.paths=this.formItem.paths;
                 }else{
                     param.paths=null;
+                }
+                if (this.formItem.headers) {
+                    param.headers = this.formItem.headers;
                 }
 
                 param.regex_priority=this.formItem.regex_priority;
@@ -321,6 +331,18 @@
                 },
                 get: function () {
                     return this.formItem.paths ? this.formItem.paths.join(',') : '';
+                }
+            },
+            headers: {
+                set: function (newValue) {
+                    if(newValue){
+                        this.formItem.headers = JSON.parse(newValue);
+                    }else{
+                        this.formItem.headers = {};
+                    }
+                },
+                get: function () {
+                    return JSON.stringify(this.formItem.headers);
                 }
             },
             snis: {
