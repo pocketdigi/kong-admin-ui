@@ -179,7 +179,7 @@
                     methods: [],
                     hosts: [],
                     paths: [],
-                    headers: {},
+                    headers: null,
                     regex_priority: 0,
                     strip_path: true,
                     preserve_host: false,
@@ -338,11 +338,11 @@
                     if(newValue){
                         this.formItem.headers = JSON.parse(newValue);
                     }else{
-                        this.formItem.headers = {};
+                        this.formItem.headers = null;
                     }
                 },
                 get: function () {
-                    return JSON.stringify(this.formItem.headers);
+                    return this.formItem.headers? JSON.stringify(this.formItem.headers) : '';
                 }
             },
             snis: {
