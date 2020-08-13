@@ -253,6 +253,8 @@
                 }
                 if (this.formItem.headers) {
                     param.headers = this.formItem.headers;
+                }else{
+                    param.headers = null;
                 }
 
                 param.regex_priority=this.formItem.regex_priority;
