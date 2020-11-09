@@ -95,6 +95,7 @@ export default {
         fieldPaths: '该Route允许的路径列表。 使用http或https 协议时, hosts, paths, 或者 methods至少设置一个.',
         fieldHeaders: '该Route允许的请求头。Host 请求头不能通过此属性设置，请使用hosts属性',
         fieldRegexPriority: '权重。当多个Route同时使用正则表达式匹配时，用于选择哪个Route解析给定请求。当两条路path配路径并具有相同的regex_priority时，将使用最早创建的path。请注意，非正则表达式路由的优先级不同（较长的非正则表达式Route在较短的Route之前匹配）',
+        fieldHttpsRedirectStatusCode: '当路由的所有属性都与协议匹配时，即请求的协议是HTTP而不是HTTPS时，状态代码Kong会以响应。 如果将字段设置为301、302、307或308，则由Kong注入位置标头。默认为426。',
         fieldStripPath: '当通过path匹配Route，向上游服务器请求时，删除匹配前缀(不带path).',
         fieldPreserveHost: '当通过域名配置，向上游服务请求时，header是否使用该域名，若选否，使用Service的host',
         fieldSnis: 'A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',

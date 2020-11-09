@@ -7,7 +7,7 @@
             <BreadcrumbItem v-else>{{routeId}}</BreadcrumbItem>
         </Breadcrumb>
 
-        <Form :model="formItem" :label-width="120" style="margin-top: 20px">
+        <Form :model="formItem" :label-width="150" style="margin-top: 20px">
             <FormItem label="name:">
                 <Input v-model="formItem.name" placeholder="Enter Route name ..." class="text_input"></Input>
                 <span class="field_desc">{{$t('route.fieldName')}}</span>
@@ -57,6 +57,11 @@
             <FormItem label="regex_priority:">
                 <InputNumber v-model="formItem.regex_priority"></InputNumber>
                 <div class="field_desc">{{$t('route.fieldRegexPriority')}}</div>
+            </FormItem>
+
+            <FormItem label="https_redirect_status_code:">
+                <InputNumber v-model="formItem.https_redirect_status_code"></InputNumber>
+                <div class="field_desc">{{$t('route.fieldHttpsRedirectStatusCode')}}</div>
             </FormItem>
 
             <!--<FormItem label="strip_path">-->
@@ -181,6 +186,7 @@
                     paths: [],
                     headers: null,
                     regex_priority: 0,
+                    https_redirect_status_code: 426,
                     strip_path: true,
                     preserve_host: false,
                     snis: [],
@@ -258,6 +264,7 @@
                 }
 
                 param.regex_priority=this.formItem.regex_priority;
+                param.https_redirect_status_code=this.formItem.https_redirect_status_code;
                 param.strip_path=this.formItem.strip_path;
                 param.preserve_host=this.formItem.preserve_host;
 
