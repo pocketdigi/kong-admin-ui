@@ -312,7 +312,7 @@
                 let fieldName = formField.fieldName;
                 let fieldType = formField.fieldType;
                 let elementType = formField.elementType;
-                if (fieldType === 'array' && elementType === 'string') {
+                if ((fieldType === 'array'||fieldType === 'set') && elementType === 'string') {
                     if(val==='') {
                         val=[];
                     }else{
@@ -320,7 +320,7 @@
                     }
 
                 }
-                if (fieldType === 'array' && elementType === 'number') {
+                if ((fieldType === 'array'||fieldType === 'set') && elementType === 'number') {
                     let tmpStrArray = val.split(',');
                     val = [];
                     tmpStrArray.forEach(str => {
