@@ -399,6 +399,9 @@
                 if (this.formItem.healthchecks.active.https_sni==='') {
                     this.formItem.healthchecks.active.https_sni=null;
                 }
+                if (this.formItem.host_header==='') {
+                    this.formItem.host_header=null;
+                }
                 if (this.client_certificate_id) {
                     this.formItem.client_certificate={id:this.client_certificate_id};
                 }else{
