@@ -1,23 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './views/Login'
-import HelloWorld from './components/HelloWorld'
-import Index from './views/Index'
-import ServiceList from './views/services/ServiceList'
-import ServiceDetail from './views/services/ServiceDetail'
-import AddService from './views/services/AddService'
-import Config from './views/Config'
-import BasicInfo from './views/BasicInfo'
-import RouteList from './views/routes/RouteList'
-import AddRoute from './views/routes/AddRoute'
-import UpstreamList from './views/upstreams/UpstreamList'
-import AddUpstream from './views/upstreams/AddUpstream'
-import ConsumerList from './views/consumers/ConsumerList'
-import AddConsumer from './views/consumers/AddConsumer'
-import AddPlugin from './views/plugins/AddPlugin'
-import PluginList from './views/plugins/PluginList'
-import CertificateList from './views/certificates/CertificateList'
-import AddCertificate from './views/certificates/AddCertificate'
 
 Vue.use(Router)
 
@@ -26,118 +8,125 @@ export default new Router({
         {
             path: '/login',
             name: 'login',
-            component: Login
-        },
-        {
-            path: '/hello',
-            name: 'hello',
-            component: HelloWorld
+            component: () => import('./views/Login'),
         },
         {
             path: '/config',
             name: 'config',
-            component: Config
+            component: () => import('./views/Config.vue'),
         },
         {
             path: '/',
-            component: Index,
+            component: () => import('./views/Index'),
             children: [
 
                 {
                     path:'services',
-                    component:ServiceList
+                    component: () => import('./views/services/ServiceList.vue'),
                 },
                 {
                     path:'services/add',
-                    component:AddService
+                    component: () => import('./views/services/AddService'),
                 },
                 {
                     path:'services/edit/:id',
-                    component:AddService
+                    component: () => import('./views/services/AddService'),
+
                 },
                 {
                     path:'services/:id',
-                    component:ServiceDetail
+                    component: () => import('./views/services/ServiceDetail'),
+
                 },
                 {
                     path:'routes',
-                    component:RouteList
+                    component: () => import('./views/routes/RouteList'),
+
                 },
                 {
                     path:'routes/add',
-                    component:AddRoute
+                    component: () => import('./views/routes/AddRoute'),
+
                 },
                 {
                     path:'routes/edit/:id',
-                    component:AddRoute
+                    component: () => import('./views/routes/AddRoute'),
+
                 },
                 {
                     path:'routes/add/:serviceId',
-                    component:AddRoute
+                    component: () => import('./views/routes/AddRoute'),
+
                 },
                 {
                     path:'upstreams',
-                    component:UpstreamList
+                    component: () => import('./views/upstreams/UpstreamList'),
+
                 },
                 {
                     path:'upstreams/add',
-                    component:AddUpstream
+                    component: () => import('./views/upstreams/AddUpstream'),
+
                 },
                 {
                     path:'upstreams/edit/:id',
-                    component:AddUpstream
+                    component: () => import('./views/upstreams/AddUpstream'),
+
                 },
                 {
                     path:'upstreams/add/:name',
-                    component:AddUpstream
+                    component: () => import('./views/upstreams/AddUpstream'),
+
                 },
                 {
                     path:'consumers',
-                    component:ConsumerList
+                    component: () => import('./views/consumers/ConsumerList'),
                 },
                 {
                     path:'consumers/add',
-                    component:AddConsumer
+                    component: () => import('./views/consumers/AddConsumer'),
                 },
                 {
                     path:'consumers/edit/:id',
-                    component:AddConsumer
+                    component: () => import('./views/consumers/AddConsumer'),
                 },
                 {
                     path:'plugins',
-                    component:PluginList
+                    component: () => import('./views/plugins/PluginList'),
+
                 },
                 {
                     path:'plugins/add',
-                    component:AddPlugin
+                    component: () => import('./views/plugins/AddPlugin'),
                 },
                 {
                     path:'plugins/add/service/:serviceId',
-                    component:AddPlugin
+                    component: () => import('./views/plugins/AddPlugin'),
                 },
                 {
                     path:'plugins/add/consumer/:consumerId',
-                    component:AddPlugin
+                    component: () => import('./views/plugins/AddPlugin'),
                 },
                 {
                     path:'plugins/edit/:pluginId',
-                    component:AddPlugin
+                    component: () => import('./views/plugins/AddPlugin'),
                 },
                 {
                     path:'certificates',
-                    component:CertificateList
+                    component: () => import('./views/certificates/CertificateList'),
+
                 },
                 {
                     path:'certificates/add',
-                    component:AddCertificate
+                    component: () => import('./views/certificates/AddCertificate'),
                 },
                 {
                     path:'certificates/edit/:certificateId',
-                    component:AddCertificate
+                    component: () => import('./views/certificates/AddCertificate'),
                 },
                 {
                     path:'',
-                    component:BasicInfo
+                    component: () => import('./views/BasicInfo'),
                 },
 
             ]

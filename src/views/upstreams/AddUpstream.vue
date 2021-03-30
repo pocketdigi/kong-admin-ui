@@ -13,6 +13,14 @@
                 <span class="field_desc">This is a hostname, which must be equal to the host of a Service.</span>
             </FormItem>
 
+            <FormItem label="algorithm:">
+                <Select v-model="formItem.algorithm" filterable class="text_input">
+                    <Option v-for="item in algorithm" :value="item" :key="item">{{ item }}</Option>
+                </Select>
+                <span class="field_desc">Which load balancing algorithm to use. Default: "round-robin".</span>
+            </FormItem>
+
+
             <FormItem label="hash_on:">
                 <RadioGroup v-model="formItem.hash_on">
                     <Radio label="none">none</Radio>
@@ -188,12 +196,34 @@
                 <span class="field_desc">An array of HTTP statuses which represent healthiness when produced by proxied traffic, as observed by passive health checks. </span>
             </FormItem>
 
+            <FormItem label="healthchecks.threshold:">
+                <InputNumber v-model="formItem.healthchecks.threshold" placeholder="threshold" class="text_input" :min="0"></InputNumber>
+                <span class="field_desc">The minimum percentage of the upstream’s targets’ weight that must be available for the whole upstream to be considered healthy. Default: 0. </span>
+            </FormItem>
+
+            <FormItem label="tags:">
+                <Input v-model="tags" placeholder="tags" class="text_input_multiple"></Input>
+                <span class="field_desc">An optional set of strings associated with the Upstream for grouping and filtering.</span>
+            </FormItem>
+
+            <FormItem label="host_header:">
+                <Input v-model="formItem.host_header" class="text_input"></Input>
+                <span class="field_desc">The hostname to be used as Host header when proxying requests through Kong.. </span>
+            </FormItem>
+
+            <FormItem label="client_certificate:">
+                <Select v-model="client_certificate_id" filterable class="text_input_multiple" clearable>
+                    <Option v-for="item in certificates" :value="item.id" :key="item.id">{{ item.id+' '+item.snis}}</Option>
+                </Select>
+                <span class="field_desc">If this plugin no need assign to a service,leave it blank.</span>
+            </FormItem>
+
             <FormItem>
                 <Button type="primary" @click="saveService">Save</Button>
             </FormItem>
         </Form>
         <div v-if="upstreamId">
-            <Row>
+            <Row>tags
                 <Col span="12"><h3>Targets:</h3></Col>
                 <Col span="12" style="text-align:right;position: absolute;top: 30%;right: 0px">
                     <Button type="primary" size="small" @click="addTarget">Add Target</Button>
@@ -214,6 +244,7 @@
             return {
                 formItem: {
                     name: '',
+                    algorithm:'',
                     hash_on:'none',
                     hash_fallback:'none',
                     hash_on_header:'',
@@ -254,13 +285,21 @@
                                 successes:0,
                                 http_statuses:[200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 303, 304, 305, 306, 307, 308],
                             }
-                        }
-                    }
+                        },
+                        threshold:0
+                    },
+                    tags:[],
+                    host_header:null,
+                    client_certificate: null
+
                 },
+                algorithm:['consistent-hashing','least-connections','round-robin'],
+                client_certificate_id:null,
                 upstreamNames:[],
                 serviceId:'',
                 edit: false,
-                upstreamId:''
+                upstreamId:'',
+                certificates:[]
             }
         },
 
@@ -270,8 +309,9 @@
                    return this.formItem.healthchecks.active.unhealthy.http_statuses.join(',');
                },
                 set: function (newValue) {
+
                     if(newValue) {
-                        this.formItem.healthchecks.active.unhealthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.active.unhealthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.active.unhealthy.http_statuses=[];
                     }
@@ -283,7 +323,7 @@
                 },
                 set: function (newValue) {
                     if(newValue) {
-                        this.formItem.healthchecks.active.healthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.active.healthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.active.healthy.http_statuses=[];
                     }
@@ -295,7 +335,7 @@
                 },
                 set: function (newValue) {
                     if(newValue) {
-                        this.formItem.healthchecks.passive.unhealthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.passive.unhealthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.passive.unhealthy.http_statuses=[];
                     }
@@ -307,12 +347,24 @@
                 },
                 set: function (newValue) {
                     if(newValue) {
-                        this.formItem.healthchecks.passive.healthy.http_statuses=newValue.split(',');
+                        this.formItem.healthchecks.passive.healthy.http_statuses=newValue.split(',').map((val)=>{return parseInt(val)}).filter(val => !isNaN(val));
                     }else {
                         this.formItem.healthchecks.passive.healthy.http_statuses=[];
                     }
                 }
             },
+            tags: {
+                get: function () {
+                    return this.formItem.tags.join(',');
+                },
+                set: function (newValue) {
+                    if(newValue) {
+                        this.formItem.tags=newValue.split(',');
+                    }else {
+                        this.formItem.tags=[];
+                    }
+                }
+            }
         },
         mounted() {
             this.upstreamId=this.$route.params.id;
@@ -321,6 +373,7 @@
             if(this.edit) {
                 this.loadUpstream();
             }
+            this.loadCertificates();
         },
         methods: {
             filterMethod (value, option) {
@@ -330,6 +383,9 @@
                 let _this = this;
                 if (this.formItem.name==='') {
                     this.formItem.name=null;
+                }
+                if (this.formItem.algorithm==='') {
+                    this.formItem.algorithm=null;
                 }
                 if (this.formItem.hash_on_header==='') {
                     this.formItem.hash_on_header=null;
@@ -343,7 +399,14 @@
                 if (this.formItem.healthchecks.active.https_sni==='') {
                     this.formItem.healthchecks.active.https_sni=null;
                 }
-
+                if (this.formItem.host_header==='') {
+                    this.formItem.host_header=null;
+                }
+                if (this.client_certificate_id) {
+                    this.formItem.client_certificate={id:this.client_certificate_id};
+                }else{
+                    this.formItem.client_certificate=null;
+                }
                 if(!this.edit){
                     this._post('/upstreams/',this.formItem,()=>{
                         _this.$router.go(-1);
@@ -356,14 +419,23 @@
                 }
             },
             loadUpstream() {
-                let _this = this;
                 this._get('/upstreams/' + this.upstreamId,response => {
-                    _this.formItem = response.data;
-                    _this.$refs.targetTable.loadTargets();
+                    this.formItem = response.data;
+                    if(this.formItem.client_certificate) {
+                        this.client_certificate_id=this.formItem.client_certificate.id;
+                    }
+                    this.$refs.targetTable.loadTargets();
                 });
             },
             addTarget() {
                 this.$refs.targetTable.showAddTargetModal();
+            },
+            loadCertificates() {
+                let url = '/certificates';
+                this.loading = true;
+                this._get(url,response => {
+                    this.certificates=response.data.data;
+                });
             },
         },
         components: {

@@ -51,7 +51,7 @@
         <div id="upstream-info">
             <Row>
                 <Col span="12"><h1>{{$t('service.service_upstream')}}</h1></Col>
-                <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px">
+                <Col span="12" style="text-align:right;position: absolute;top: 50%;right: 0px" v-if="upstreamExisted">
                     <Button type="primary" size="small" @click="editUpstream()">{{$t('common.edit')}}</Button>
                 </Col>
             </Row>
