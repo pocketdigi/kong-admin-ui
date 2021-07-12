@@ -60,7 +60,7 @@ export default {
         upstreamNotExisted:'名为`{host}`的上游服务器不存在，如果不是外部host,您需要添加一个叫{host}的上游服务器',
         fieldServiceName:'Service名称',
         fieldRetries:'失败时重试次数.',
-        fieldProtocol:'与上游服务器通讯使用的协议，http 或 https.',
+        fieldProtocol:'与上游服务器通讯使用的协议',
         fieldHost:'上游服务器的主机名(外部填域名).',
         fieldPort:'上游服务器端口.',
         fieldPath:'请求上游服务器的路径.',

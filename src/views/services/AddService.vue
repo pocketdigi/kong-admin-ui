@@ -20,6 +20,11 @@
                 <RadioGroup v-model="formItem.protocol">
                     <Radio label="http">http</Radio>
                     <Radio label="https">https</Radio>
+                    <Radio label="grpc">grpc</Radio>
+                    <Radio label="grpcs">grpcs</Radio>
+                    <Radio label="tcp">tcp</Radio>
+                    <Radio label="tls">tls</Radio>
+                    <Radio label="udp">udp</Radio>
                 </RadioGroup>
                 <span class="field_desc">{{$t('service.fieldProtocol')}}</span>
             </FormItem>
@@ -122,7 +127,8 @@
                     delete formData.host;
                 }
                 if (formData.path==='') {
-                    formData.path='/';
+                    // formData.path='/';
+                  formData.path=null;
                 }
                 if (formData.url==='') {
                     delete formData.url;

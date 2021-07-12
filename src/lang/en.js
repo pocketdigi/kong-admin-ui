@@ -62,7 +62,7 @@ export default {
         upstreamNotExisted:'Upstream `{host}` is not existed,if it\'s not a external host,You must add a Upstream named `{host}`',
         fieldServiceName:'The Service name',
         fieldRetries:'The number of retries to execute upon failure to proxy.',
-        fieldProtocol:'The protocol used to communicate with the upstream. It can be one of http or https.',
+        fieldProtocol:'The protocol used to communicate with the upstream.',
         fieldHost:'The host of the upstream server.',
         fieldPort:'The upstream server port.',
         fieldPath:'The path to be used in requests to the upstream server.',
