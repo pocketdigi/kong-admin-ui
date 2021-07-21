@@ -33,7 +33,7 @@ Kong 网关的管理界面
 3. 下载编译好的包，解压部署到自己的server
 4. 使用docker部署 
 
-    ``` docker run -d --name kong-admin-ui -p 8899:80 pocketdigi/kong-admin-ui:0.5.2 ```
+    ``` docker run -d --name kong-admin-ui -p 8899:80 pocketdigi/kong-admin-ui:0.5.3 ```
 
 
 ### 截图
